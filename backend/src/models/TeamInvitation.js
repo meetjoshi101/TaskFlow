@@ -187,10 +187,14 @@ module.exports = (sequelize) => {
   };
 
   TeamInvitation.getPendingInvitations = function(teamId) {
+    const { Op } = require('sequelize');
     return this.findAll({
       where: {
         teamId: teamId,
-        status: 'pending'
+        status: 'pending',
+        expiresAt: {
+          [Op.gt]: new Date()
+        }
       },
       include: [{
         model: sequelize.models.User,
@@ -230,18 +234,16 @@ module.exports = (sequelize) => {
   };
 
   TeamInvitation.cleanupExpired = async function() {
-    const [updatedCount] = await this.update(
-      { status: 'expired' },
-      {
-        where: {
-          status: 'pending',
-          expiresAt: {
-            [Op.lt]: new Date()
-          }
+    const { Op } = require('sequelize');
+    const deletedCount = await this.destroy({
+      where: {
+        status: 'pending',
+        expiresAt: {
+          [Op.lt]: new Date()
         }
       }
-    );
-    return updatedCount;
+    });
+    return deletedCount;
   };
 
   TeamInvitation.isEmailAlreadyInvited = async function(email, teamId) {
@@ -256,21 +258,32 @@ module.exports = (sequelize) => {
   };
 
   TeamInvitation.countPendingInvitations = function(teamId) {
+    const { Op } = require('sequelize');
     return this.count({
       where: {
         teamId: teamId,
-        status: 'pending'
+        status: 'pending',
+        expiresAt: {
+          [Op.gt]: new Date()
+        }
       }
     });
   };
 
   TeamInvitation.getInvitationStats = async function(teamId) {
+    const { Op } = require('sequelize');
     const total = await this.count({
       where: { teamId: teamId }
     });
 
     const pending = await this.count({
-      where: { teamId: teamId, status: 'pending' }
+      where: { 
+        teamId: teamId, 
+        status: 'pending',
+        expiresAt: {
+          [Op.gt]: new Date()
+        }
+      }
     });
 
     const accepted = await this.count({
@@ -282,7 +295,18 @@ module.exports = (sequelize) => {
     });
 
     const expired = await this.count({
-      where: { teamId: teamId, status: 'expired' }
+      where: { 
+        teamId: teamId, 
+        [Op.or]: [
+          { status: 'expired' },
+          { 
+            status: 'pending',
+            expiresAt: {
+              [Op.lte]: new Date()
+            }
+          }
+        ]
+      }
     });
 
     const cancelled = await this.count({

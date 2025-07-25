@@ -161,7 +161,7 @@ describe('TeamMember Model', () => {
       membership = await TeamMember.create({
         userId: testUser1.id,
         teamId: testTeam.id,
-        role: 'member'
+        role: 'viewer'
       });
     });
 

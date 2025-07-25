@@ -93,9 +93,10 @@ module.exports = (sequelize) => {
   Team.prototype.generateSlug = function(name) {
     return name
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
+      .replace(/[^a-z0-9\s.-]/g, '') // Allow dots temporarily
+      .replace(/\./g, '-') // Convert dots to dashes first
+      .replace(/\s+/g, '-') // Convert spaces to dashes
+      .replace(/-+/g, '-') // Collapse multiple dashes
       .replace(/^-+|-+$/g, '') // Remove leading/trailing dashes
       .trim();
   };
@@ -133,12 +134,13 @@ module.exports = (sequelize) => {
 
   Team.prototype.removeMember = async function(userId) {
     const TeamMember = sequelize.models.TeamMember;
-    return TeamMember.destroy({
+    const result = await TeamMember.destroy({
       where: {
         userId: userId,
         teamId: this.id
       }
     });
+    return result > 0;
   };
 
   Team.prototype.updateMemberRole = async function(userId, newRole) {
@@ -167,6 +169,21 @@ module.exports = (sequelize) => {
       where: {
         teamId: this.id,
         role: role,
+        status: 'active'
+      },
+      include: [{
+        model: sequelize.models.User,
+        as: 'user'
+      }]
+    });
+  };
+
+  Team.prototype.getMembers = async function() {
+    const TeamMember = sequelize.models.TeamMember;
+    
+    return TeamMember.findAll({
+      where: {
+        teamId: this.id,
         status: 'active'
       },
       include: [{
@@ -272,9 +289,11 @@ module.exports = (sequelize) => {
   Team.generateUniqueSlug = async function(name) {
     const baseSlug = name
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
+      .replace(/[^a-z0-9\s.-]/g, '') // Allow dots temporarily
+      .replace(/\./g, '-') // Convert dots to dashes first
+      .replace(/\s+/g, '-') // Convert spaces to dashes
+      .replace(/-+/g, '-') // Collapse multiple dashes
+      .replace(/^-+|-+$/g, '') // Remove leading/trailing dashes
       .trim();
 
     let slug = baseSlug;

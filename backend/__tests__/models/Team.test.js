@@ -322,6 +322,14 @@ describe('Team Model', () => {
       });
 
       const slug1 = await Team.generateUniqueSlug('Test Team');
+      
+      // Create another team with the first generated slug
+      await Team.create({
+        name: 'Test Team 1',
+        slug: slug1,
+        createdBy: testUser.id
+      });
+      
       const slug2 = await Team.generateUniqueSlug('Test Team');
 
       expect(slug1).toBe('test-team-1');
@@ -359,7 +367,7 @@ describe('Team Model', () => {
         createdBy: testUser.id
       });
 
-      const users = await team.getUsers();
+      const users = await team.getMembers();
       expect(Array.isArray(users)).toBe(true);
     });
 

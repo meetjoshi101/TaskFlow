@@ -18,12 +18,18 @@ module.exports = (sequelize) => {
     role: {
       type: DataTypes.ENUM('admin', 'member', 'viewer'),
       allowNull: false,
-      defaultValue: 'member'
+      defaultValue: 'member',
+      validate: {
+        isIn: [['admin', 'member', 'viewer']]
+      }
     },
     status: {
       type: DataTypes.ENUM('active', 'inactive', 'suspended'),
       allowNull: false,
-      defaultValue: 'active'
+      defaultValue: 'active',
+      validate: {
+        isIn: [['active', 'inactive', 'suspended']]
+      }
     },
     invitedBy: {
       type: DataTypes.INTEGER,
