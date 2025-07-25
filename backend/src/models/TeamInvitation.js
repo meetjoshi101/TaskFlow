@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Op } = require('sequelize');
 const crypto = require('crypto');
 
 module.exports = (sequelize) => {
@@ -29,17 +29,24 @@ module.exports = (sequelize) => {
     role: {
       type: DataTypes.ENUM('admin', 'member', 'viewer'),
       allowNull: false,
-      defaultValue: 'member'
+      defaultValue: 'member',
+      validate: {
+        isIn: [['admin', 'member', 'viewer']]
+      }
     },
     status: {
       type: DataTypes.ENUM('pending', 'accepted', 'declined', 'expired', 'cancelled'),
       allowNull: false,
-      defaultValue: 'pending'
+      defaultValue: 'pending',
+      validate: {
+        isIn: [['pending', 'accepted', 'declined', 'expired', 'cancelled']]
+      }
     },
     token: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: true,
+      defaultValue: () => crypto.randomBytes(32).toString('hex')
     },
     message: {
       type: DataTypes.TEXT,
@@ -47,7 +54,8 @@ module.exports = (sequelize) => {
     },
     expiresAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     },
     sentAt: {
       type: DataTypes.DATE,
@@ -69,13 +77,11 @@ module.exports = (sequelize) => {
   }, {
     tableName: 'team_invitations',
     hooks: {
-      beforeCreate: (invitation) => {
-        if (!invitation.token) {
-          invitation.token = crypto.randomBytes(32).toString('hex');
-        }
-        if (!invitation.expiresAt) {
-          invitation.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
-        }
+      beforeCreate: (invitation, options) => {
+        // Generate token if not provided
+        invitation.token = invitation.token || crypto.randomBytes(32).toString('hex');
+        // Set expiration if not provided (7 days from now)
+        invitation.expiresAt = invitation.expiresAt || new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
       }
     },
     indexes: [
@@ -174,7 +180,7 @@ module.exports = (sequelize) => {
         token: token,
         status: 'pending',
         expiresAt: {
-          [sequelize.Sequelize.Op.gt]: new Date()
+          [Op.gt]: new Date()
         }
       }
     });
@@ -230,7 +236,7 @@ module.exports = (sequelize) => {
         where: {
           status: 'pending',
           expiresAt: {
-            [sequelize.Sequelize.Op.lt]: new Date()
+            [Op.lt]: new Date()
           }
         }
       }
@@ -299,7 +305,7 @@ module.exports = (sequelize) => {
       where: {
         status: 'pending',
         expiresAt: {
-          [sequelize.Sequelize.Op.between]: [new Date(), futureDate]
+          [Op.between]: [new Date(), futureDate]
         }
       },
       include: [{

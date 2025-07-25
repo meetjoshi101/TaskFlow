@@ -1,4 +1,5 @@
 const { RefreshToken, User, sequelize } = require('../../src/models');
+const { Op } = require('sequelize');
 const crypto = require('crypto');
 
 describe('RefreshToken Model', () => {
@@ -384,7 +385,7 @@ describe('RefreshToken Model', () => {
 
       const expiredTokens = await RefreshToken.findAll({
         where: { 
-          expiresAt: { [sequelize.Op.lt]: new Date() },
+          expiresAt: { [Op.lt]: new Date() },
           isActive: true
         }
       });

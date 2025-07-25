@@ -11,7 +11,8 @@ module.exports = (sequelize) => {
     token: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      unique: true
+      unique: true,
+      defaultValue: () => crypto.randomBytes(40).toString('hex')
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -24,11 +25,13 @@ module.exports = (sequelize) => {
     },
     expiresAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      defaultValue: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     },
     lastUsedAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
+      defaultValue: null
     },
     usageCount: {
       type: DataTypes.INTEGER,
@@ -37,7 +40,10 @@ module.exports = (sequelize) => {
     },
     deviceType: {
       type: DataTypes.ENUM('web', 'mobile', 'desktop', 'tablet'),
-      allowNull: true
+      allowNull: true,
+      validate: {
+        isIn: [['web', 'mobile', 'desktop', 'tablet']]
+      }
     },
     deviceId: {
       type: DataTypes.STRING(255),

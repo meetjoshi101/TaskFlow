@@ -20,8 +20,33 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: true,
       validate: {
-        len: [1, 100],
-        is: /^[a-z0-9-]+$/i
+        len: [3, 100],
+        is: /^[a-z0-9]+(-[a-z0-9]+)*$/,
+        notStartsWithDash(value) {
+          if (value && value.startsWith('-')) {
+            throw new Error('Slug cannot start with a dash');
+          }
+        },
+        notEndsWithDash(value) {
+          if (value && value.endsWith('-')) {
+            throw new Error('Slug cannot end with a dash');
+          }
+        },
+        noSpaces(value) {
+          if (value && value.includes(' ')) {
+            throw new Error('Slug cannot contain spaces');
+          }
+        },
+        noUnderscores(value) {
+          if (value && value.includes('_')) {
+            throw new Error('Slug cannot contain underscores');
+          }
+        },
+        noUppercase(value) {
+          if (value && value !== value.toLowerCase()) {
+            throw new Error('Slug must be lowercase');
+          }
+        }
       }
     },
     description: {
@@ -136,17 +161,17 @@ module.exports = (sequelize) => {
   };
 
   Team.prototype.getMembersByRole = async function(role) {
-    const User = sequelize.models.User;
     const TeamMember = sequelize.models.TeamMember;
     
-    return User.findAll({
+    return TeamMember.findAll({
+      where: {
+        teamId: this.id,
+        role: role,
+        status: 'active'
+      },
       include: [{
-        model: TeamMember,
-        where: {
-          teamId: this.id,
-          role: role
-        },
-        as: 'teamMemberships'
+        model: sequelize.models.User,
+        as: 'user'
       }]
     });
   };
@@ -340,7 +365,33 @@ module.exports = (sequelize) => {
   };
 
   Team.validateSlug = function(slug) {
-    return /^[a-z0-9-]+$/.test(slug) && slug.length >= 1 && slug.length <= 100;
+    return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug) && slug.length >= 3 && slug.length <= 100;
+  };
+
+  Team.createWithOwner = async function(teamData, userId) {
+    const TeamMember = sequelize.models.TeamMember;
+    
+    // Generate slug if not provided
+    if (!teamData.slug) {
+      teamData.slug = await this.generateUniqueSlug(teamData.name);
+    }
+    
+    // Set createdBy
+    teamData.createdBy = userId;
+    
+    // Create team
+    const team = await this.create(teamData);
+    
+    // Add creator as admin
+    await TeamMember.create({
+      userId: userId,
+      teamId: team.id,
+      role: 'admin',
+      status: 'active',
+      joinedAt: new Date()
+    });
+    
+    return team;
   };
 
   // Define associations

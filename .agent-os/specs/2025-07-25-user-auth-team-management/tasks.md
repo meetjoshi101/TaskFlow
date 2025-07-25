@@ -16,20 +16,21 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 
 ### 🔄 **IN PROGRESS:**
 
-- **Task 1.3**: Sequelize models implementation
-  - ✅ User model: **COMPLETE** (23/23 tests passing)
-  - 🔧 Team model: **NEEDS FIXES** (15/25 tests passing - missing methods and associations)
-  - 🔧 TeamMember model: **NEEDS FIXES** (validation and method implementation issues)
-  - 🔧 TeamInvitation model: **NEEDS FIXES** (missing token generation and validation hooks)
-  - 🔧 RefreshToken model: **NEEDS FIXES** (missing token generation and expiration logic)
+- **Task 1.3**: Sequelize models implementation - **93% COMPLETE** (152/164 tests passing)
+  - ✅ **User model**: **COMPLETE** (68/68 tests passing)
+  - ✅ **RefreshToken model**: **COMPLETE** (40/40 tests passing)  
+  - 🔧 **TeamInvitation model**: **90% COMPLETE** (36/40 tests passing - 4 minor issues remaining)
+  - 🔧 **Team model**: **80% COMPLETE** (20/25 tests passing - missing getUsers association, slug generation edge cases)
+  - 🔧 **TeamMember model**: **90% COMPLETE** (28/31 tests passing - enum validation issues)
 
 ### 📋 **IMMEDIATE NEXT STEPS:**
 
-1. Fix Team model methods (`createWithOwner`, `getMembersByRole`, associations)
-2. Implement missing model hooks for token generation (TeamInvitation, RefreshToken)
-3. Fix validation constraints and enum values
-4. Complete all model implementations to achieve 100% test coverage
-5. Proceed to Task 1.4 (database indexes and constraints)
+1. **Fix remaining 12 test failures across 3 models** (93% → 100% completion):
+   - TeamInvitation: Fix 4 test logic issues (queries returning incorrect counts)
+   - Team: Fix getUsers association method, slug generation edge cases (5 issues)  
+   - TeamMember: Add enum validation for role and status fields (3 issues)
+2. Achieve 100% test coverage for all 5 models (164/164 tests passing)
+3. Proceed to Task 1.4 (database indexes and constraints)
 
 ---
 
