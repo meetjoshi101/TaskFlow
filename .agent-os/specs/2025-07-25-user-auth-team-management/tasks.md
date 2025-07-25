@@ -4,6 +4,7 @@ These are the tasks to be completed for the spec detailed in @.agent-os/specs/20
 
 > Created: July 25, 2025
 > Status: Ready for Implementation
+> **Note:** Backend code has been organized into `/backend` folder for better project structure
 
 ## Tasks
 
