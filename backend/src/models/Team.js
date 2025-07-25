@@ -1,0 +1,376 @@
+const { DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
+  const Team = sequelize.define('Team', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      validate: {
+        len: [1, 100],
+        notEmpty: true
+      }
+    },
+    slug: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+      validate: {
+        len: [1, 100],
+        is: /^[a-z0-9-]+$/i
+      }
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    website: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      validate: {
+        isUrl: true
+      }
+    },
+    logo: {
+      type: DataTypes.STRING(500),
+      allowNull: true
+    },
+    settings: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: {}
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  }, {
+    tableName: 'teams',
+    hooks: {
+      beforeValidate: (team) => {
+        if (team.name && !team.slug) {
+          team.slug = team.generateSlug(team.name);
+        }
+      }
+    }
+  });
+
+  // Instance Methods
+  Team.prototype.generateSlug = function(name) {
+    return name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '') // Remove leading/trailing dashes
+      .trim();
+  };
+
+  Team.prototype.updateSlug = async function(newName) {
+    const baseSlug = this.generateSlug(newName || this.name);
+    let slug = baseSlug;
+    let counter = 1;
+
+    // Check if slug exists (excluding current team)
+    while (await Team.findOne({ 
+      where: { 
+        slug: slug,
+        id: { [sequelize.Sequelize.Op.ne]: this.id }
+      } 
+    })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+
+    this.slug = slug;
+    return this.save();
+  };
+
+  Team.prototype.addMember = async function(userId, role = 'member', invitedBy = null) {
+    const TeamMember = sequelize.models.TeamMember;
+    return TeamMember.create({
+      userId: userId,
+      teamId: this.id,
+      role: role,
+      invitedBy: invitedBy,
+      invitedAt: invitedBy ? new Date() : null
+    });
+  };
+
+  Team.prototype.removeMember = async function(userId) {
+    const TeamMember = sequelize.models.TeamMember;
+    return TeamMember.destroy({
+      where: {
+        userId: userId,
+        teamId: this.id
+      }
+    });
+  };
+
+  Team.prototype.updateMemberRole = async function(userId, newRole) {
+    const TeamMember = sequelize.models.TeamMember;
+    const [updatedCount] = await TeamMember.update(
+      { role: newRole },
+      {
+        where: {
+          userId: userId,
+          teamId: this.id
+        }
+      }
+    );
+    if (updatedCount > 0) {
+      return TeamMember.findOne({
+        where: { userId: userId, teamId: this.id }
+      });
+    }
+    return null;
+  };
+
+  Team.prototype.getMembersByRole = async function(role) {
+    const User = sequelize.models.User;
+    const TeamMember = sequelize.models.TeamMember;
+    
+    return User.findAll({
+      include: [{
+        model: TeamMember,
+        where: {
+          teamId: this.id,
+          role: role
+        },
+        as: 'teamMemberships'
+      }]
+    });
+  };
+
+  Team.prototype.getMemberCount = async function() {
+    const TeamMember = sequelize.models.TeamMember;
+    return TeamMember.count({
+      where: {
+        teamId: this.id,
+        status: 'active'
+      }
+    });
+  };
+
+  Team.prototype.getAdmins = async function() {
+    const TeamMember = sequelize.models.TeamMember;
+    return TeamMember.findAll({
+      where: {
+        teamId: this.id,
+        role: 'admin',
+        status: 'active'
+      },
+      include: [{
+        model: sequelize.models.User,
+        as: 'user'
+      }]
+    });
+  };
+
+  Team.prototype.isUserMember = async function(userId) {
+    const TeamMember = sequelize.models.TeamMember;
+    const membership = await TeamMember.findOne({
+      where: {
+        userId: userId,
+        teamId: this.id,
+        status: 'active'
+      }
+    });
+    return !!membership;
+  };
+
+  Team.prototype.getUserRole = async function(userId) {
+    const TeamMember = sequelize.models.TeamMember;
+    const membership = await TeamMember.findOne({
+      where: {
+        userId: userId,
+        teamId: this.id,
+        status: 'active'
+      }
+    });
+    return membership ? membership.role : null;
+  };
+
+  Team.prototype.isUserAdmin = async function(userId) {
+    const role = await this.getUserRole(userId);
+    return role === 'admin';
+  };
+
+  Team.prototype.updateSettings = function(newSettings) {
+    this.settings = { ...this.settings, ...newSettings };
+    return this.save();
+  };
+
+  Team.prototype.getSetting = function(key, defaultValue = null) {
+    return this.settings && this.settings[key] !== undefined 
+      ? this.settings[key] 
+      : defaultValue;
+  };
+
+  Team.prototype.setSetting = function(key, value) {
+    if (!this.settings) {
+      this.settings = {};
+    }
+    this.settings[key] = value;
+    return this.save();
+  };
+
+  Team.prototype.activate = function() {
+    this.isActive = true;
+    return this.save();
+  };
+
+  Team.prototype.deactivate = function() {
+    this.isActive = false;
+    return this.save();
+  };
+
+  // Class Methods
+  Team.findBySlug = function(slug) {
+    return this.findOne({
+      where: { 
+        slug: slug.toLowerCase(),
+        isActive: true
+      }
+    });
+  };
+
+  Team.generateUniqueSlug = async function(name) {
+    const baseSlug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+
+    let slug = baseSlug;
+    let counter = 1;
+
+    while (await this.findOne({ where: { slug } })) {
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+
+    return slug;
+  };
+
+  Team.getActiveTeams = function() {
+    return this.findAll({
+      where: { isActive: true },
+      order: [['name', 'ASC']]
+    });
+  };
+
+  Team.getUserTeams = function(userId) {
+    const TeamMember = sequelize.models.TeamMember;
+    return this.findAll({
+      include: [{
+        model: TeamMember,
+        as: 'memberships',
+        where: {
+          userId: userId,
+          status: 'active'
+        }
+      }],
+      where: { isActive: true },
+      order: [['name', 'ASC']]
+    });
+  };
+
+  Team.searchByName = function(query) {
+    return this.findAll({
+      where: {
+        name: {
+          [sequelize.Sequelize.Op.like]: `%${query}%`
+        },
+        isActive: true
+      },
+      order: [['name', 'ASC']]
+    });
+  };
+
+  Team.getTeamStats = async function(teamId) {
+    const TeamMember = sequelize.models.TeamMember;
+    const TeamInvitation = sequelize.models.TeamInvitation;
+
+    const memberCount = await TeamMember.count({
+      where: {
+        teamId: teamId,
+        status: 'active'
+      }
+    });
+
+    const adminCount = await TeamMember.count({
+      where: {
+        teamId: teamId,
+        role: 'admin',
+        status: 'active'
+      }
+    });
+
+    const pendingInvitations = await TeamInvitation.count({
+      where: {
+        teamId: teamId,
+        status: 'pending'
+      }
+    });
+
+    return {
+      members: memberCount,
+      admins: adminCount,
+      pendingInvitations: pendingInvitations
+    };
+  };
+
+  Team.getRecentTeams = function(limit = 10) {
+    return this.findAll({
+      where: { isActive: true },
+      order: [['createdAt', 'DESC']],
+      limit: limit
+    });
+  };
+
+  Team.validateSlug = function(slug) {
+    return /^[a-z0-9-]+$/.test(slug) && slug.length >= 1 && slug.length <= 100;
+  };
+
+  // Define associations
+  Team.associate = function(models) {
+    // Team belongs to user (creator)
+    Team.belongsTo(models.User, {
+      foreignKey: 'createdBy',
+      as: 'creator'
+    });
+
+    // Team has many members through team_members
+    Team.belongsToMany(models.User, {
+      through: models.TeamMember,
+      foreignKey: 'teamId',
+      otherKey: 'userId',
+      as: 'members'
+    });
+
+    // Team has many memberships
+    Team.hasMany(models.TeamMember, {
+      foreignKey: 'teamId',
+      as: 'memberships'
+    });
+
+    // Team has many invitations
+    Team.hasMany(models.TeamInvitation, {
+      foreignKey: 'teamId',
+      as: 'invitations'
+    });
+  };
+
+  return Team;
+};
