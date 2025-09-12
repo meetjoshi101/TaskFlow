@@ -36,6 +36,7 @@ describe('POST /api/tasks/:id/comments', () => {
 
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send(commentData)
       .expect(201);
 
@@ -54,6 +55,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const taskId = 1;
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ authorId: 1 })
       .expect(400);
 
@@ -64,6 +66,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const taskId = 1;
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ text: 'Test comment' })
       .expect(400);
 
@@ -74,6 +77,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const taskId = 1;
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ text: '', authorId: 1 })
       .expect(400);
 
@@ -85,6 +89,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const longText = 'a'.repeat(501);
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ text: longText, authorId: 1 })
       .expect(400);
 
@@ -95,6 +100,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const nonExistentTaskId = 9999;
     const response = await request(app)
       .post(`/api/tasks/${nonExistentTaskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ text: 'Test comment', authorId: 1 })
       .expect(404);
 
@@ -105,6 +111,7 @@ describe('POST /api/tasks/:id/comments', () => {
     const taskId = 1;
     const response = await request(app)
       .post(`/api/tasks/${taskId}/comments`)
+      .set('skip-auth', 'true')
       .send({ text: 'Test comment', authorId: 9999 })
       .expect(404);
 

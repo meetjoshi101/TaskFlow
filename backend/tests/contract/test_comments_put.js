@@ -35,6 +35,7 @@ describe('PUT /api/comments/:id', () => {
 
     const response = await request(app)
       .put(`/api/comments/${commentId}`)
+      .set('skip-auth', 'true')
       .send(updateData)
       .expect(200);
 
@@ -52,6 +53,7 @@ describe('PUT /api/comments/:id', () => {
     const commentId = 1;
     const response = await request(app)
       .put(`/api/comments/${commentId}`)
+      .set('skip-auth', 'true')
       .send({})
       .expect(400);
 
@@ -62,6 +64,7 @@ describe('PUT /api/comments/:id', () => {
     const commentId = 1;
     const response = await request(app)
       .put(`/api/comments/${commentId}`)
+      .set('skip-auth', 'true')
       .send({ text: '' })
       .expect(400);
 
@@ -73,6 +76,7 @@ describe('PUT /api/comments/:id', () => {
     const longText = 'a'.repeat(501);
     const response = await request(app)
       .put(`/api/comments/${commentId}`)
+      .set('skip-auth', 'true')
       .send({ text: longText })
       .expect(400);
 
@@ -83,6 +87,7 @@ describe('PUT /api/comments/:id', () => {
     const nonExistentCommentId = 9999;
     const response = await request(app)
       .put(`/api/comments/${nonExistentCommentId}`)
+      .set('skip-auth', 'true')
       .send({ text: 'Updated text' })
       .expect(404);
 
@@ -97,6 +102,7 @@ describe('PUT /api/comments/:id', () => {
 
     const response = await request(app)
       .put(`/api/comments/${commentId}`)
+      .set('skip-auth', 'true')
       .send(updateData)
       .expect(200);
 

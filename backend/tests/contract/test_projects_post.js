@@ -35,6 +35,7 @@ describe('POST /api/projects', () => {
 
     const response = await request(app)
       .post('/api/projects')
+      .set('skip-auth', 'true')
       .send(projectData)
       .expect(201);
 
@@ -47,6 +48,7 @@ describe('POST /api/projects', () => {
   it('should return 400 for missing name', async () => {
     const response = await request(app)
       .post('/api/projects')
+      .set('skip-auth', 'true')
       .send({})
       .expect(400);
 
@@ -57,6 +59,7 @@ describe('POST /api/projects', () => {
   it('should return 400 for empty name', async () => {
     const response = await request(app)
       .post('/api/projects')
+      .set('skip-auth', 'true')
       .send({ name: '' })
       .expect(400);
 
@@ -67,6 +70,7 @@ describe('POST /api/projects', () => {
     const longName = 'a'.repeat(101);
     const response = await request(app)
       .post('/api/projects')
+      .set('skip-auth', 'true')
       .send({ name: longName })
       .expect(400);
 

@@ -42,6 +42,7 @@ describe('PUT /api/tasks/:id/status', () => {
 
     const response = await request(app)
       .put(`/api/tasks/${taskId}/status`)
+      .set('skip-auth', 'true')
       .send(statusData)
       .expect(200);
 
@@ -58,6 +59,7 @@ describe('PUT /api/tasks/:id/status', () => {
 
     const response = await request(app)
       .put(`/api/tasks/${taskId}/status`)
+      .set('skip-auth', 'true')
       .send(statusData)
       .expect(200);
 
@@ -68,6 +70,7 @@ describe('PUT /api/tasks/:id/status', () => {
     const taskId = 1;
     const response = await request(app)
       .put(`/api/tasks/${taskId}/status`)
+      .set('skip-auth', 'true')
       .send({})
       .expect(400);
 
@@ -78,6 +81,7 @@ describe('PUT /api/tasks/:id/status', () => {
     const taskId = 1;
     const response = await request(app)
       .put(`/api/tasks/${taskId}/status`)
+      .set('skip-auth', 'true')
       .send({ status: 'Invalid Status' })
       .expect(400);
 
@@ -88,6 +92,7 @@ describe('PUT /api/tasks/:id/status', () => {
     const nonExistentTaskId = 9999;
     const response = await request(app)
       .put(`/api/tasks/${nonExistentTaskId}/status`)
+      .set('skip-auth', 'true')
       .send({ status: 'In Progress' })
       .expect(404);
 
@@ -101,6 +106,7 @@ describe('PUT /api/tasks/:id/status', () => {
     for (const status of validStatuses) {
       const response = await request(app)
         .put(`/api/tasks/${taskId}/status`)
+        .set('skip-auth', 'true')
         .send({ status })
         .expect(200);
 

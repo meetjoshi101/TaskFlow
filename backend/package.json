@@ -13,11 +13,13 @@
     "format": "prettier --write src/**/*.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "sqlite3": "^5.1.6",
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "express": "^4.18.2",
     "helmet": "^7.1.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
@@ -28,7 +30,12 @@
     "prettier": "^3.2.3",
     "supertest": "^6.3.3"
   },
-  "keywords": ["taskflow", "api", "express", "sqlite"],
+  "keywords": [
+    "taskflow",
+    "api",
+    "express",
+    "sqlite"
+  ],
   "author": "TaskFlow Team",
   "license": "MIT"
 }
