@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ApiService, User } from '../../services/api.service';
+import { ApiService } from '../../services/api.service';
+import { User } from '../../services/api.models';
 import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
