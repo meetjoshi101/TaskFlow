@@ -1,0 +1,51 @@
+<div class="comment">
+  <div class="comment-header">
+    <div class="comment-author">
+      <span class="author-name">User #{{ comment.authorId }}</span>
+      <span class="comment-date">{{ formatDate(comment.createdAt) }}</span>
+    </div>
+
+    <div class="comment-actions" *ngIf="canEdit || canDelete">
+      <button
+        *ngIf="canEdit && !isEditing"
+        (click)="startEditing()"
+        class="edit-btn"
+        title="Edit comment"
+      >
+        ✏️
+      </button>
+      <button
+        *ngIf="canDelete"
+        (click)="deleteComment()"
+        class="delete-btn"
+        title="Delete comment"
+      >
+        🗑️
+      </button>
+    </div>
+  </div>
+
+  <div class="comment-content">
+    <div *ngIf="!isEditing" class="comment-text">
+      {{ comment.text }}
+    </div>
+
+    <div *ngIf="isEditing" class="comment-edit">
+      <textarea
+        [(ngModel)]="editText"
+        class="edit-textarea"
+        rows="3"
+        maxlength="500"
+        placeholder="Edit your comment..."
+      ></textarea>
+      <div class="edit-actions">
+        <button (click)="saveEdit()" class="save-btn" [disabled]="!editText.trim()">Save</button>
+        <button (click)="cancelEditing()" class="cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="comment-footer" *ngIf="comment.updatedAt !== comment.createdAt">
+    <span class="updated-text">Edited {{ formatDate(comment.updatedAt) }}</span>
+  </div>
+</div>

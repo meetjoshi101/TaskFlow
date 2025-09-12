@@ -1,0 +1,33 @@
+<div class="project-list-container">
+  <header class="header">
+    <h1>Taskify Projects</h1>
+    <div class="user-info" *ngIf="currentUser">
+      <span>Welcome, {{ currentUser.name }}</span>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading projects...</p>
+  </div>
+
+  <div class="error" *ngIf="error">
+    <p>{{ error }}</p>
+    <button (click)="retry()">Retry</button>
+  </div>
+
+  <div class="projects-grid" *ngIf="!loading && !error">
+    <div
+      class="project-card"
+      *ngFor="let project of projects"
+      (click)="selectProject(project)"
+    >
+      <h3>{{ project.name }}</h3>
+      <p>Click to view Kanban board</p>
+    </div>
+  </div>
+
+  <div class="no-projects" *ngIf="!loading && !error && projects.length === 0">
+    <p>No projects available.</p>
+  </div>
+</div>
