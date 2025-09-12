@@ -1,0 +1,36 @@
+<div class="user-selector-container">
+  <h1>Welcome to Taskify</h1>
+  <p>Please select your user to continue:</p>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading users...</p>
+  </div>
+
+  <div class="error" *ngIf="error">
+    <p>{{ error }}</p>
+    <button (click)="retry()">Retry</button>
+  </div>
+
+  <div class="users-grid" *ngIf="!loading && !error">
+    <div
+      class="user-card"
+      *ngFor="let user of users"
+      (click)="selectUser(user)"
+      [class.selected]="selectedUser?.id === user.id"
+    >
+      <div class="user-avatar">
+        {{ user.name.charAt(0).toUpperCase() }}
+      </div>
+      <div class="user-info">
+        <h3>{{ user.name }}</h3>
+        <span class="user-role" [class]="user.role">
+          {{ user.role === 'product_manager' ? 'Product Manager' : 'Engineer' }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="instructions" *ngIf="!loading && !error">
+    <p>Click on your name to continue to the project dashboard.</p>
+  </div>
+</div>

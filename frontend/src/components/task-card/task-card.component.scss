@@ -1,0 +1,106 @@
+.task-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+
+.task-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.task-card.current-user {
+  border-left: 4px solid #28a745;
+  background: #f8fff9;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.task-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.task-id {
+  font-size: 0.8rem;
+  color: #999;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.task-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.task-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-assignee {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.assignee-label {
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.assignee-name {
+  color: #333;
+}
+
+.task-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.task-status label {
+  font-weight: 500;
+  color: #666;
+}
+
+.task-status select {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.task-status select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.task-footer {
+  margin-top: 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.comment-count {
+  font-size: 0.8rem;
+  color: #666;
+}

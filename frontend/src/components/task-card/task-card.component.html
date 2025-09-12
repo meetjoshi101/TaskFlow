@@ -1,0 +1,40 @@
+<div
+  class="task-card"
+  [class.current-user]="isCurrentUserTask"
+  (click)="onCardClick()"
+>
+  <div class="task-header">
+    <h3>{{ task.title }}</h3>
+    <span class="task-id">#{{ task.id }}</span>
+  </div>
+
+  <div class="task-content">
+    <p *ngIf="task.description" class="task-description">{{ task.description }}</p>
+
+    <div class="task-meta">
+      <div class="task-assignee" *ngIf="task.assignedUserId">
+        <span class="assignee-label">Assigned to:</span>
+        <span class="assignee-name">User #{{ task.assignedUserId }}</span>
+      </div>
+
+      <div class="task-status">
+        <label for="status-{{ task.id }}">Status:</label>
+        <select
+          id="status-{{ task.id }}"
+          [value]="task.status"
+          (change)="onStatusChange($event)"
+          (click)="$event.stopPropagation()"
+        >
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="In Review">In Review</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="task-footer" *ngIf="showComments">
+    <span class="comment-count">Comments: 0</span>
+  </div>
+</div>
