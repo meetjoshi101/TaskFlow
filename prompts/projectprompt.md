@@ -45,3 +45,8 @@ Following is the relationship between the work groups and work types:-
     - Work Item Entity can have multiple Work Logs.
     - Work Log can have multiple Work Checklists.
     - Work Item Entity is a polymorphic type that can represent one of: Goal, Sub Goal, Portfolio, Project, or Task.
+
+Exclude:
+    1) User Management and User Authencation.
+
+Focuse on core features only.
