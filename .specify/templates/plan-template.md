@@ -47,7 +47,7 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This check validates alignment with the project constitution: Code Quality rules (linting, docs, complexity justification), Testing Standards (tests-first, CI gating), UX Consistency (where UX applies), Performance goals (when material), and Observability/Versioning expectations. Document any deviations in Complexity Tracking and include mitigation steps.
 
 ## Project Structure
 
@@ -145,7 +145,8 @@ ios/ or android/
    - Quickstart test = story validation steps
 
 5. **Update agent file incrementally** (O(1) operation):
-   - Run `.specify/scripts/bash/update-agent-context.sh copilot` for your AI assistant
+   - Run `.specify/scripts/bash/update-agent-context.sh copilot`
+     **IMPORTANT**: Execute it exactly as specified above. Do not add or remove any arguments.
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers
    - Update recent changes (keep last 3)
