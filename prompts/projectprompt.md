@@ -1,6 +1,6 @@
 # Taskflow
 
-I am building an work-management system.
+I am building a work-management system.
 
 The system should have the following work groups:-
 
@@ -10,7 +10,7 @@ The system should have the following work groups:-
 
 Each work group should have the following work type:-
 
-A. Strategic Planning
+A. Goals Management
     - Goals
     - Sub Goals
 B. Execution
@@ -20,7 +20,7 @@ B. Execution
     - Sub Tasks
     - Steps
 C. Operations
-    - Entity
+    - Work Item Entity (represents Goals, Sub Goals, Portfolios, Projects, Tasks)
     - Work Log
     - Work Checklist
 
@@ -29,7 +29,7 @@ Following is the relationship between the work groups and work types:-
 1. Strategic Planning
     - Goals can have multiple Sub Goals.
     - Sub Goals can be part of multiple Goals.
-    - Goals and Sub Goals can be associated with Portfolios, Projects, Tasks.
+    - Goals and Sub Goals can have a many-to-many association with Portfolios, Projects, and Tasks.
 
 2. Execution
     - Portfolios can have multiple Projects
@@ -40,8 +40,8 @@ Following is the relationship between the work groups and work types:-
     - Task can be part of multiple Projects
 
 3. Operations
-    - Work Log can be associated with Entity.
-    - Work Checklist can be associated with Entity and Work Log.
-    - Entity can have multiple Work Logs.
+    - Work Log can be associated with a Work Item Entity.
+    - Work Checklist can be associated with a Work Item Entity and Work Log.
+    - Work Item Entity can have multiple Work Logs.
     - Work Log can have multiple Work Checklists.
-    - Entity can be of type Goals, Sub Goals, Portfolios, Projects, Tasks.
+    - Work Item Entity is a polymorphic type that can represent one of: Goal, Sub Goal, Portfolio, Project, or Task.
