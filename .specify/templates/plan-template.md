@@ -47,7 +47,22 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This project uses the TaskFlow Constitution (see `.specify/memory/constitution.md`).
+The plan MUST include a short Constitution Check listing how the proposed feature
+complies with the following mandatory principles:
+
+- Code Quality: adherence to TypeScript strict rules, avoidance of `any`, and
+   standalone Angular component usage where applicable.
+- Testing Standards: tests-first approach, contract tests for public APIs, and
+   inclusion of unit/integration tests in the plan.
+- User Experience Consistency: accessibility checks and reuse of documented
+   component patterns for user-facing changes.
+- Performance Requirements: explicit performance goals or confirmation that the
+   change is not performance-sensitive.
+
+If the plan cannot satisfy a principle, document the deviation, risk, and a
+remediation timeline in Complexity Tracking. The plan MUST not proceed if the
+deviation lacks a maintainer-approved remediation path.
 
 ## Project Structure
 

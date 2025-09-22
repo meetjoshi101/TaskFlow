@@ -53,6 +53,15 @@
 - [ ] T005 [P] Contract test GET /api/users/{id} in tests/contract/test_users_get.py
 - [ ] T006 [P] Integration test user registration in tests/integration/test_registration.py
 - [ ] T007 [P] Integration test auth flow in tests/integration/test_auth.py
+ 
+**Constitution Alignment**: Task generation MUST map tasks to the Constitution principles:
+- Code Quality tasks (linting, types, API documentation)
+- Testing tasks (unit, contract, integration, performance)
+- UX tasks (a11y fixes, design token application, component reuse)
+- Performance tasks (profiling, budget enforcement, lazy-loading)
+
+Any generated task list that omits tests-first ordering or fails to reference applicable
+Constitution principles MUST be flagged and require a maintainer-approved exception.
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
 - [ ] T008 [P] User model in src/models/user.py

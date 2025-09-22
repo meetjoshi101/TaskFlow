@@ -37,6 +37,13 @@
 - **Optional sections**: Include only when relevant to the feature
 - When a section doesn't apply, remove it entirely (don't leave as "N/A")
 
+### Constitution Compliance (mandatory)
+Every spec MUST include a short `Constitution Compliance` note that lists which
+Project Constitution principles apply and any related constraints or performance
+targets (Code Quality, Testing Standards, UX Consistency, Performance Requirements).
+If the spec requires deviations from these principles, include [NEEDS_CLARIFICATION]
+with an explicit remediation plan and timeline.
+
 ### For AI Generation
 When creating this spec from a user prompt:
 1. **Mark all ambiguities**: Use [NEEDS CLARIFICATION: specific question] for any assumption you'd need to make
