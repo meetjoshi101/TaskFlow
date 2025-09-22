@@ -28,7 +28,7 @@ Format: `[ID] [P?] Description`
 - No `[P]` = Must follow listed dependencies or shares file scope
 
 ## Phase 3.1: Setup
-- [x] T001 Initialize Node project & Angular workspace (no sample app) in `/workspaces/TaskFlow` (command: `npm init -y`; `npm create @angular@latest -- --directory . --minimal`) – produces baseline `package.json`, `tsconfig.*`, `angular.json` (Depends: none)
+- [ ] T001 Initialize Node project & Angular workspace (no sample app) in `/workspaces/TaskFlow` (command: `npm init -y`; `npm create @angular@latest -- --directory . --minimal`) – produces baseline `package.json`, `tsconfig.*`, `angular.json` (Depends: none)
 - [ ] T002 Install core dependencies in `/workspaces/TaskFlow/package.json` (`@angular/core`, `@angular/platform-browser`, `rxjs`, `zod`, `idb`, `ulidx`, `jest`, `ts-jest`, `@types/jest`, `playwright`, `@playwright/test`, `axe-core`) (Depends: T001)
 - [ ] T003 [P] Add dev tooling: eslint, prettier, husky, lint-staged config (`.eslintrc.cjs`, `.prettierrc`, `.lintstagedrc`) (Depends: T001)
 - [ ] T004 [P] Configure Jest (create `jest.config.ts`) and `ts-jest` transformer (Depends: T001)

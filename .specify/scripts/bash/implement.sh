@@ -20,6 +20,7 @@
 #   --continue  Resume from last incomplete task
 #   --help, -h  Show this help message
 
+# Temporarily disable set -e to debug
 set -e
 
 # Parse command line arguments
@@ -148,7 +149,6 @@ log_success() {
 parse_tasks() {
     local tasks_file="$1"
     
-    echo "DEBUG: parse_tasks called with: $tasks_file" >&2
     log_info "Parsing tasks from $tasks_file"
     
     # Debug: check if file exists and is readable
@@ -164,28 +164,22 @@ parse_tasks() {
     
     log_info "File exists and is readable, starting parse..."
     
-    # Simple test
-    echo "DEBUG: Testing simple read..." >&2
-    local test_count=0
-    while IFS= read -r line; do
-        ((test_count++))
-        echo "DEBUG: Read line $test_count" >&2
-        if [[ $test_count -eq 3 ]]; then
-            break
-        fi
-    done < "$tasks_file"
-    echo "DEBUG: Simple test done, read $test_count lines" >&2
+    # Use mapfile to read the entire file at once
+    local -a file_lines
+    mapfile -t file_lines < "$tasks_file"
+    
+    log_info "Read ${#file_lines[@]} lines from file"
     
     local in_task_section=false
     local line_num=0
     
-    while IFS= read -r line; do
+    for line in "${file_lines[@]}"; do
         ((line_num++))
         
-        # Debug: show we're reading lines
-        if [[ $line_num -le 5 ]] || [[ $line_num -eq 30 ]] || [[ $line_num -eq 31 ]]; then
-            log_info "DEBUG: Line $line_num: $line"
-        fi
+        # Debug: show we're processing lines (only for first few)
+        # if [[ $line_num -le 5 ]]; then
+        #     log_info "DEBUG: Line $line_num: $line"
+        # fi
         
         # Start parsing when we hit a task section (Phase 3.x)
         if [[ "$line" =~ ^##[[:space:]]*Phase[[:space:]]*3\. ]]; then
@@ -203,14 +197,11 @@ parse_tasks() {
         
         # Parse task lines: - [ ] T001 [P] Description
         if $in_task_section; then
-            log_info "In task section, checking line: $line"
             if [[ "$line" =~ ^-[[:space:]]*\[[[:space:]]*([x[:space:]])[[:space:]]*\][[:space:]]*(T[0-9]{3})([[:space:]]*\[P\])?[[:space:]]*(.*) ]]; then
                 local status="${BASH_REMATCH[1]}"
                 local task_id="${BASH_REMATCH[2]}"
                 local parallel_marker="${BASH_REMATCH[3]}"
                 local description="${BASH_REMATCH[4]}"
-                
-                log_info "Matched task line: status='$status' id='$task_id' parallel='$parallel_marker' desc='$description'"
             
             # Clean up description
             description=$(echo "$description" | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
@@ -248,7 +239,9 @@ parse_tasks() {
             log_info "Found task: $task_id - ${description:0:60}... (parallel: ${TASK_PARALLEL[$task_id]})"
             fi
         fi
-    done < "$tasks_file"
+    done
+    
+    log_info "Finished parsing. Found ${#TASK_IDS[@]} tasks"
 }
 
 # Get task completion status from tasks.md
@@ -257,8 +250,12 @@ get_task_status() {
     local task_id="$2"
     local -n status_ref=$3
     
+    # Use mapfile to read the file
+    local -a file_lines
+    mapfile -t file_lines < "$tasks_file"
+    
     # Look for the task line and check if it's marked complete [x]
-    while IFS= read -r line; do
+    for line in "${file_lines[@]}"; do
         if [[ "$line" =~ ^-[[:space:]]*\[[[:space:]]*x[[:space:]]*\][[:space:]]*$task_id ]]; then
             status_ref="completed"
             return 0
@@ -266,7 +263,7 @@ get_task_status() {
             status_ref="pending"
             return 0
         fi
-    done < "$tasks_file"
+    done
     
     status_ref="not_found"
 }
@@ -353,8 +350,13 @@ execute_npm_init_task() {
     
     # Check if package.json exists
     if [[ ! -f "package.json" ]]; then
-        npm init -y
-        log_success "Created package.json"
+        log_info "Running npm init -y..."
+        if npm init -y; then
+            log_success "Created package.json"
+        else
+            log_error "Failed to create package.json"
+            return 1
+        fi
     else
         log_info "package.json already exists"
     fi
@@ -364,8 +366,13 @@ execute_npm_init_task() {
         if [[ ! -f "angular.json" ]]; then
             log_info "Setting up Angular workspace"
             # Use npx to avoid global installation requirement
-            npx @angular/cli@latest new . --directory . --minimal --skip-git --package-manager npm
-            log_success "Created Angular workspace"
+            log_info "Running npx @angular/cli@latest new..."
+            if npx @angular/cli@latest new . --directory . --minimal --skip-git --package-manager npm --skip-install; then
+                log_success "Created Angular workspace"
+            else
+                log_error "Failed to create Angular workspace"
+                return 1
+            fi
         else
             log_info "Angular workspace already exists"
         fi
@@ -835,13 +842,13 @@ main() {
     
     # If specific task requested, execute only that one
     if [[ -n "$SPECIFIC_TASK" ]]; then
-        if [[ -z "${task_list[$SPECIFIC_TASK]:-}" ]]; then
+        if [[ -z "${TASK_DESCRIPTIONS[$SPECIFIC_TASK]:-}" ]]; then
             log_error "Task $SPECIFIC_TASK not found"
             exit 1
         fi
         
         log_info "Executing specific task: $SPECIFIC_TASK"
-        execute_task "$SPECIFIC_TASK" "${task_list[$SPECIFIC_TASK]}"
+        execute_task "$SPECIFIC_TASK" "${TASK_DESCRIPTIONS[$SPECIFIC_TASK]}"
         mark_task_complete "$TASKS" "$SPECIFIC_TASK"
         log_success "Task $SPECIFIC_TASK completed"
         return 0
@@ -849,13 +856,13 @@ main() {
     
     # Execute tasks in order
     local completed_count=0
-    local total_count=${#task_list[@]}
+    local total_count=${#TASK_IDS[@]}
     
     # Get sorted task IDs
-    local sorted_tasks=($(printf '%s\n' "${!task_list[@]}" | sort))
+    local sorted_tasks=($(printf '%s\n' "${TASK_IDS[@]}" | sort))
     
     for task_id in "${sorted_tasks[@]}"; do
-        local description="${task_list[$task_id]}"
+        local description="${TASK_DESCRIPTIONS[$task_id]}"
         local status=""
         
         get_task_status "$TASKS" "$task_id" status
@@ -867,7 +874,7 @@ main() {
         fi
         
         # Check dependencies
-        local deps="${task_deps[$task_id]:-}"
+        local deps="${TASK_DEPS[$task_id]:-}"
         local can_execute=true
         
         if [[ -n "$deps" ]]; then
