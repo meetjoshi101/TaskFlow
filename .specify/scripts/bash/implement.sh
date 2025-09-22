@@ -170,11 +170,29 @@ parse_tasks() {
     
     log_info "Read ${#file_lines[@]} lines from file"
     
+    # Debug: check what we actually read
+    if [[ ${#file_lines[@]} -eq 0 ]]; then
+        log_error "No lines read from file!"
+        return 1
+    fi
+    
+    log_info "First line: ${file_lines[0]}"
+    log_info "Line 30: ${file_lines[29]:-'<not found>'}"
+    
+    # Try accessing the array differently
+    local total_lines=${#file_lines[@]}
+    log_info "Going to process $total_lines lines"
+    
     local in_task_section=false
     local line_num=0
     
     for line in "${file_lines[@]}"; do
         ((line_num++))
+        
+        # Debug: show we're actually looping
+        if [[ $line_num -eq 1 ]]; then
+            log_info "DEBUG: Starting to process lines..."
+        fi
         
         # Debug: show we're processing lines (only for first few)
         # if [[ $line_num -le 5 ]]; then
@@ -184,7 +202,7 @@ parse_tasks() {
         # Start parsing when we hit a task section (Phase 3.x)
         if [[ "$line" =~ ^##[[:space:]]*Phase[[:space:]]*3\. ]]; then
             in_task_section=true
-            log_info "Found Phase 3 section: $line"
+            log_info "DEBUG: Found Phase 3 section: $line"
             continue
         fi
         
@@ -209,6 +227,8 @@ parse_tasks() {
             # Store task info in global arrays
             TASK_IDS+=("$task_id")
             TASK_DESCRIPTIONS["$task_id"]="$description"
+            
+            log_info "DEBUG: Stored task $task_id (total: ${#TASK_IDS[@]})"
             
             # Mark as parallel if [P] present
             if [[ "$parallel_marker" =~ \[P\] ]]; then
@@ -242,6 +262,14 @@ parse_tasks() {
     done
     
     log_info "Finished parsing. Found ${#TASK_IDS[@]} tasks"
+    
+    # Debug: show what we stored
+    for i in {0..2}; do
+        if [[ $i -lt ${#TASK_IDS[@]} ]]; then
+            local task_id="${TASK_IDS[$i]}"
+            log_info "DEBUG: Task $task_id = ${TASK_DESCRIPTIONS[$task_id]:0:50}..."
+        fi
+    done
 }
 
 # Get task completion status from tasks.md
@@ -839,6 +867,15 @@ main() {
     fi
     
     log_info "Found ${#TASK_IDS[@]} tasks to execute"
+    
+    # Debug: let's see what tasks we have
+    log_info "Sample tasks found:"
+    for i in {0..4}; do
+        if [[ $i -lt ${#TASK_IDS[@]} ]]; then
+            local task_id="${TASK_IDS[$i]}"
+            log_info "  $task_id: ${TASK_DESCRIPTIONS[$task_id]:0:50}..."
+        fi
+    done
     
     # If specific task requested, execute only that one
     if [[ -n "$SPECIFIC_TASK" ]]; then
