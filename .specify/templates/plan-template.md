@@ -47,7 +47,7 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This check validates alignment with the project constitution: Code Quality rules (linting, docs, complexity justification), Testing Standards (tests-first, CI gating), UX Consistency (where UX applies), Performance goals (when material), and Observability/Versioning expectations. Document any deviations in Complexity Tracking and include mitigation steps.
 
 ## Project Structure
 

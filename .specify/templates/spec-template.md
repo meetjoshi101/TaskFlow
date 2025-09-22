@@ -93,6 +93,11 @@ When creating this spec from a user prompt:
 - [ ] Written for non-technical stakeholders
 - [ ] All mandatory sections completed
 
+### Constitution Alignment
+- [ ] Tests-first requirement noted where applicable (tests or test scenarios present)
+- [ ] UX consistency or accessibility impacts identified when UI is affected
+- [ ] Performance goals specified when performance is material to the feature
+
 ### Requirement Completeness
 - [ ] No [NEEDS CLARIFICATION] markers remain
 - [ ] Requirements are testable and unambiguous  

@@ -125,3 +125,10 @@ Task: "Integration test auth in tests/integration/test_auth.py"
 - [ ] Parallel tasks truly independent
 - [ ] Each task specifies exact file path
 - [ ] No task modifies same file as another [P] task
+
+### Constitution Alignment
+- [ ] Tasks enforce Tests-first (tests created before implementation tasks)
+- [ ] Linting/formatting/setup tasks included to meet Code Quality gates
+- [ ] UX-related tasks reference design tokens/style guide where applicable
+- [ ] Performance-related tasks include benchmarks or performance acceptance criteria when required
+- [ ] Observability tasks added for instrumentation and logging where applicable
