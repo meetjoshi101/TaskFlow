@@ -1,4 +1,4 @@
-# Feature Specification: Simple Client-Side To‑Do List
+# Feature Specification: Simple Client-Side To-Do List
 
 **Feature Branch**: `001-taskflow-leate-create`  
 **Created**: 2025-09-23  
