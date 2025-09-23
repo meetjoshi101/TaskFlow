@@ -4,12 +4,15 @@
 **Prerequisites**: plan.md, research.md, data-model.md, contracts/, quickstart.md
 
 ## Execution Flow (summary)
+
 Derived from templates: Setup → Tests (failing first) → Core models/services → UI components → Feature facade → Integration (persistence wiring) → Polish (a11y, performance, docs).
 
 ## Format: `[ID] [P] Description`
+
 `[P]` means can run in parallel (different file, no dependency overlap).
 
 ## Phase 3.1: Setup
+
 - [ ] T001 Initialize Angular workspace (if not present) with CLI: `ng new frontend --create-application=false --standalone --routing --strict --style=css --package-manager=pnpm` (root)
 - [ ] T002 Add libraries via CLI (library-first):
   - `ng generate library core-data --standalone`
@@ -21,7 +24,9 @@ Derived from templates: Setup → Tests (failing first) → Core models/services
 - [ ] T005 [P] Create initial directory placeholders for tests: `frontend/tests/{unit,contract,integration}` (align with plan structure)
 
 ## Phase 3.2: Tests First (TDD) – MUST FAIL INITIALLY
+
 User stories (5 acceptance + extended flows) + edge behaviors.
+
 - [ ] T006 [P] Contract test: persistence service create/list/update/delete soft delete flow in `frontend/tests/contract/persistence.spec.ts`
 - [ ] T007 [P] Contract test: UI state service persistence (filter & panel) in `frontend/tests/contract/ui-state.spec.ts`
 - [ ] T008 [P] Unit test: Task title validation (length, trim) in `frontend/tests/unit/task-validation.spec.ts`
@@ -35,6 +40,7 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 - [ ] T016 [P] Accessibility smoke test (keyboard traversal, ARIA roles, status text) in `frontend/tests/integration/a11y_smoke.spec.ts`
 
 ## Phase 3.3: Core Models & Services (Implement after failing tests committed)
+
 - [ ] T017 [P] Implement `Task` interface + validation utilities in `frontend/projects/core-data/src/lib/task.model.ts`
 - [ ] T018 [P] Implement ordering & restore helper functions in `frontend/projects/core-data/src/lib/order.utils.ts`
 - [ ] T019 Implement `TasksRepository` (IndexedDB CRUD + soft delete buffer) in `frontend/projects/persistence/src/lib/tasks.repository.ts`
@@ -44,6 +50,7 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 - [ ] T023 [P] Export services from `frontend/projects/persistence/src/public-api.ts`
 
 ## Phase 3.4: UI Components
+
 - [ ] T024 [P] `TaskInputComponent` (add new task + validation feedback) `frontend/projects/ui-components/src/lib/task-input.component.ts`
 - [ ] T025 [P] `TaskListComponent` (list, toggle, edit entry points) `frontend/projects/ui-components/src/lib/task-list.component.ts`
 - [ ] T026 [P] `TaskItemComponent` (individual row: display, edit mode handling) `frontend/projects/ui-components/src/lib/task-item.component.ts`
@@ -52,16 +59,19 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 - [ ] T029 Add accessibility attributes & aria-live region integration across components
 
 ## Phase 3.5: Feature Facade & Orchestration
+
 - [ ] T030 Implement feature facade service (combines repo + ui state + derived selectors) in `frontend/projects/feature-tasks/src/lib/tasks.facade.ts`
 - [ ] T031 Provide facade DI + exported public API in `frontend/projects/feature-tasks/src/public-api.ts`
 - [ ] T032 Host demo application scaffold (`ng generate application demo`) referencing facade & components
 
 ## Phase 3.6: Integration Wiring & Additional Tests
+
 - [ ] T033 Persistence service integration refinements (batch load + lazy render path) in `tasks.repository.ts`
 - [ ] T034 Add performance measurement helper (simple timing log) in `frontend/projects/feature-tasks/src/lib/perf.util.ts`
 - [ ] T035 Add smoke test verifying Deleted panel restore ordering `frontend/tests/integration/deleted_panel_restore_order.spec.ts`
 
 ## Phase 3.7: Polish & Quality Gates
+
 - [ ] T036 [P] Add README per library with usage + public API description
 - [ ] T037 [P] Add additional unit tests for edge cases (quota exceeded, invalid restore) in `frontend/tests/unit/persistence_edge.spec.ts`
 - [ ] T038 [P] Add axe-based accessibility script (optional) `frontend/scripts/a11y-check.ts`
@@ -71,6 +81,7 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 - [ ] T042 Final docs update: update `contracts/README.md` with any API surface changes & add performance evidence section
 
 ## Dependencies Overview
+
 | Task | Depends On |
 |------|------------|
 | T002 | T001 |
@@ -99,7 +110,8 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 | T042 | T039,T041 |
 
 ## Parallel Execution Examples
-```
+
+```MD
 # Example 1: Write initial contract/integration/unit tests in parallel (T006-T016)
 Task: T006 persistence contract test
 Task: T007 UI state contract test
@@ -128,6 +140,7 @@ Task: T028 deleted panel
 ```
 
 ## Validation Checklist
+
 - [ ] All entities have model tasks (Task ✅)
 - [ ] Tests precede implementation (Phases 3.2 before 3.3+)
 - [ ] Parallel tasks only different files
@@ -136,6 +149,7 @@ Task: T028 deleted panel
 - [ ] UI state persistence covered in tests
 
 ## Notes
+
 - Commit after each task; keep test failures intentional until implementation phase starts.
 - Ensure no production code added before corresponding failing test (Principle III).
 - Use Angular CLI for every generated artifact (no manual component/service file stubs).
