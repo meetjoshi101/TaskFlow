@@ -41,13 +41,13 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 
 ## Phase 3.3: Core Models & Services (Implement after failing tests committed)
 
-- [ ] T017 [P] Implement `Task` interface + validation utilities in `frontend/projects/core-data/src/lib/task.model.ts`
-- [ ] T018 [P] Implement ordering & restore helper functions in `frontend/projects/core-data/src/lib/order.utils.ts`
-- [ ] T019 Implement `TasksRepository` (IndexedDB CRUD + soft delete buffer) in `frontend/projects/persistence/src/lib/tasks.repository.ts`
-- [ ] T020 Implement UI state service (filter + deleted panel) in `frontend/projects/persistence/src/lib/ui-state.service.ts`
+- [X] T017 [P] Implement `Task` interface + validation utilities in `frontend/projects/core-data/src/lib/task.model.ts`
+- [X] T018 [P] Implement ordering & restore helper functions in `frontend/projects/core-data/src/lib/order.utils.ts`
+- [X] T019 Implement `TasksRepository` (IndexedDB CRUD + soft delete buffer) in `frontend/projects/persistence/src/lib/tasks.repository.ts`
+- [X] T020 Implement UI state service (filter + deleted panel) in `frontend/projects/persistence/src/lib/ui-state.service.ts`
 - [ ] T021 Wire persistence error handling + fallback in-memory store (IndexedDB open failure) `tasks.repository.ts`
-- [ ] T022 Add model/index exports (public API surfacing) in `frontend/projects/core-data/src/public-api.ts`
-- [ ] T023 [P] Export services from `frontend/projects/persistence/src/public-api.ts`
+- [X] T022 Add model/index exports (public API surfacing) in `frontend/projects/core-data/src/public-api.ts`
+- [X] T023 [P] Export services from `frontend/projects/persistence/src/public-api.ts`
 
 ## Phase 3.4: UI Components
 

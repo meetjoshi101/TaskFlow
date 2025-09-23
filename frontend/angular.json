@@ -27,7 +27,8 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/core-data/tsconfig.spec.json"
+            "tsConfig": "projects/core-data/tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js"
           }
         }
       }
@@ -53,7 +54,8 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/persistence/tsconfig.spec.json"
+            "tsConfig": "projects/persistence/tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js"
           }
         }
       }
@@ -79,7 +81,8 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/ui-components/tsconfig.spec.json"
+            "tsConfig": "projects/ui-components/tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js"
           }
         }
       }
@@ -105,7 +108,8 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "projects/feature-tasks/tsconfig.spec.json"
+            "tsConfig": "projects/feature-tasks/tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js"
           }
         }
       }

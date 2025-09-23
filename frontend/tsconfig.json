@@ -3,19 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
-      "core-data": [
-        "./dist/core-data"
-      ],
-      "feature-tasks": [
-        "./dist/feature-tasks"
-      ],
-      "persistence": [
-        "./dist/persistence"
-      ],
-      "ui-components": [
-        "./dist/ui-components"
-      ]
+      "core-data": ["./projects/core-data/src/public-api.ts"],
+      "persistence": ["./projects/persistence/src/public-api.ts"],
+      "ui-components": ["./projects/ui-components/src/public-api.ts"],
+      "feature-tasks": ["./projects/feature-tasks/src/public-api.ts"]
     },
     "strict": true,
     "noImplicitOverride": true,
