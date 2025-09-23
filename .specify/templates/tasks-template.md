@@ -96,7 +96,7 @@ Task: "Integration test auth in tests/integration/test_auth.py"
 - Verify tests fail before implementing
 - Commit after each task
 - Avoid: vague tasks, same file conflicts
-- Constitution Reference: v2.1.0 (`/memory/constitution.md`)
+- Constitution Reference: v3.1.0 (`/memory/constitution.md`)
 
 ## Task Generation Rules
 Note: Applied during main() execution
