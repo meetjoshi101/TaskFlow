@@ -50,16 +50,14 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-**Reference: Constitution v3.1.0**
+**Reference: Constitution v4.0.0**
 
 - [ ] **Angular-First Architecture**: All functionality starts with simple standalone Angular components/services
 - [ ] **Simple Implementation**: Start with simplest solution, add complexity only when proven necessary
 - [ ] **Angular CLI Usage**: All artifacts generated via `ng generate` commands
 - [ ] **Context7 Documentation**: Angular and related library documentation fetched via Context7 MCP
-- [ ] **Test-First Development**: Red-Green-Refactor cycle followed for all new behavior
-- [ ] **Contract Testing**: External APIs have contract test suites
 - [ ] **Operational Excellence**: Observability, versioning, simplicity, accessibility, security addressed
-- [ ] **Quality Gates**: Lint errors = build failure, coverage minimums met
+- [ ] **Quality Gates**: Lint errors = build failure
 - [ ] **Angular Best Practices**: Standalone components, signals for state, built-in features first
 
 ## Project Structure
@@ -180,7 +178,7 @@ ios/ or android/
 - Implementation tasks to make tests pass
 
 **Ordering Strategy**:
-- TDD order: Tests before implementation 
+- Implementation order: Core functionality before polish 
 - Dependency order: Models before services before UI
 - Mark [P] for parallel execution (independent files)
 

@@ -1,20 +1,20 @@
 <!--
 Sync Impact Report
-Version: 3.0.0 -> 3.1.0
-Modified Principles:
- - I: Added Angular framework preference and simple implementation emphasis
- - II: Enhanced Angular CLI scaffolding guidance with Context7 integration
- - V: Added Angular-specific simplicity guidelines
-Removed Sections: None
-Added Sections:
- - Angular framework specification in technology stack
- - Simple implementation methodology
+Version: 3.1.0 -> 4.0.0
+Modified Principles: None
+Removed Principles:
+ - III: BREAKING CHANGE - Removed "Test-First Quality Gates (NON-NEGOTIABLE)" principle entirely
+ - IV: BREAKING CHANGE - Removed "Contract & Integration Testing Discipline" principle entirely
+Added Sections: None
+Removed Sections:
+ - All testing requirements and constraints
+ - Test-related quality budgets and CI pipeline steps
 Templates Updated:
- - .specify/templates/plan-template.md ✅ (updated Constitution Check for Angular-first v3.1.0)
- - .specify/templates/spec-template.md ✅ (updated version reference to v3.1.0)
- - .specify/templates/tasks-template.md ✅ (updated version reference to v3.1.0)
+ - .specify/templates/plan-template.md ✅ (removed testing gates, updated to v4.0.0)
+ - .specify/templates/spec-template.md ✅ (updated version reference to v4.0.0)
+ - .specify/templates/tasks-template.md ✅ (removed TDD phases, updated to v4.0.0)
  - .specify/templates/agent-file-template.md (no constitution references) ✅
-Rationale for MINOR: Added new enforceable constraints (Angular framework, simple implementation) without breaking existing principles.
+Rationale for MAJOR: Breaking changes removing core non-negotiable principles (testing requirements).
 Deferred TODOs: None
 -->
 
@@ -24,14 +24,15 @@ Deferred TODOs: None
 
 ### I. Angular-First Modular Architecture & Simple Implementation
 
-Every functional capability MUST begin as a simple, standalone Angular component or service before considering more complex architectural patterns. Angular (v18+) with standalone components is the REQUIRED framework. Start with the simplest implementation that satisfies the requirement, then refactor only when complexity is proven necessary. Shared code MUST never be duplicated across components—promote to a reusable module when used twice. All Angular artifacts MUST be created using Angular CLI (`ng generate`) to ensure consistency. Libraries MUST declare explicit public APIs and semantic version constraints. Circular dependencies are PROHIBITED. Each module MUST include README, usage examples, and minimal contract tests before first consumption.
+Every functional capability MUST begin as a simple, standalone Angular component or service before considering more complex architectural patterns. Angular (v20+) with standalone components is the REQUIRED framework. Start with the simplest implementation that satisfies the requirement, then refactor only when complexity is proven necessary. Shared code MUST never be duplicated across components—promote to a reusable module when used twice. All Angular artifacts MUST be created using Angular CLI (`ng generate`) to ensure consistency. Libraries MUST declare explicit public APIs and semantic version constraints. Circular dependencies are PROHIBITED. Each module MUST include README and usage examples before first consumption.
 
 Simple Implementation Rules:
+
 1. Always start with standalone components over feature modules
 2. Use signals for state management before considering external state libraries  
 3. Implement the minimal feature set that satisfies user requirements
 4. Prefer built-in Angular features over third-party solutions
-5. Add complexity only when simple solutions are proven insufficient through testing
+5. Add complexity only when simple solutions are proven insufficient
 
 Rationale: Enforces clear boundaries, enables rapid development through simplicity, and reduces regression surface when scaling the codebase.
 
@@ -65,20 +66,9 @@ Backward incompatible CLI or MCP contract changes REQUIRE a MAJOR version bump w
 
 Rationale: Ensures access to current documentation, consistent Angular project structure, and reliable agent interoperability while leveraging Angular's built-in tooling ecosystem.
 
- 
-### III. Test-First Quality Gates (NON-NEGOTIABLE)
-Red–Green–Refactor MUST govern all implementation work. For every new behavior: (1) Write failing unit/contract/integration test; (2) Commit failing test; (3) Implement minimal code to pass; (4) Refactor with tests GREEN. No production code WITHOUT a covering test. Mutation testing (or equivalent) MUST be applied to critical libraries (core logic, contract layer) with a documented threshold (initial ≥60%, target ≥80%). Pull Requests WITHOUT evidence of failing tests prior to implementation MUST be rejected. Flaky tests MUST be quarantined within 24h and either fixed or reverted—no ignored tests in main.
-Rationale: Ensures provable correctness, reduces regressions, and supports confident refactoring.
+### III. Operational Excellence (Observability, Versioning, Simplicity, Accessibility, Security)
 
- 
-### IV. Contract & Integration Testing Discipline
-Any externally consumed API (public library API surface, CLI command, MCP method, HTTP endpoint) MUST have a contract test suite asserting request/response schema or observable behavior. Integration tests MUST cover: cross-library orchestration, persistence boundaries, and error propagation paths (success + failure). When a contract changes, a compatibility test MUST demonstrate either backward compatibility or clearly failing old behavior with documented migration notes. Contract drift WITHOUT tests is a blocker for release.
-Rationale: Protects downstream consumers and stabilizes evolution of public interfaces.
-
- 
-### V. Operational Excellence (Observability, Versioning, Simplicity, Accessibility, Security)
-
-Observability: Structured logging (JSON in production, human-readable locally) MUST exist at boundaries (CLI entrypoints, MCP handlers, persistence, external calls). Metrics for latency (p95), error rate, and test duration MUST be emitted or derivable. Traces SHOULD wrap cross-service or long-running flows.
+Observability: Structured logging (JSON in production, human-readable locally) MUST exist at boundaries (CLI entrypoints, MCP handlers, persistence, external calls). Metrics for latency (p95) and error rate MUST be emitted or derivable. Traces SHOULD wrap cross-service or long-running flows.
 
 Versioning: Semantic Versioning (MAJOR.MINOR.PATCH). MAJOR = breaking contracts; MINOR = backward compatible feature or principle additions; PATCH = fixes/clarifications. No unreleased breaking changes in main.
 
@@ -102,9 +92,9 @@ Rationale: Sustains long-term maintainability, user trust, and operational relia
 
 Technology Stack: Angular (v18+), TypeScript ≥5.5, Node.js LTS (current active), Package manager: pnpm (preferred) or npm (if CI constraint). Use standalone components as the default pattern. Start with Angular's built-in features (signals, reactive forms, router) before adding external libraries. Build tooling MUST use Angular CLI defaults unless measurable improvement >10% demonstrated. Context7 MCP server MUST be used for documentation validation of all Angular and related library usage.
 
-Documentation: Every component and service MUST include: purpose, public API, usage examples, test strategy, version notes. Architectural decision records (ADR) REQUIRED for: cross-cutting concerns, build pipeline deviations, or third-party library adoptions.
+Documentation: Every component and service MUST include: purpose, public API, usage examples, version notes. Architectural decision records (ADR) REQUIRED for: cross-cutting concerns, build pipeline deviations, or third-party library adoptions.
 
-Quality Budgets: p95 unit test runtime <300ms per component; integration suite <5m total. Lint errors = build failure. Code coverage global minimum 85% lines, 90% for core logic components.
+Quality Budgets: Lint errors = build failure.
 
 Forbidden Practices: Hidden side effects in constructors, dynamic reflection-based API wiring, global mutable singletons (except Angular DI providers), silent error swallowing, and undocumented feature flags.
 
@@ -112,24 +102,24 @@ Forbidden Practices: Hidden side effects in constructors, dynamic reflection-bas
 
 Branching: `feature/{issue-id}-{slug}`, `fix/{issue-id}-{slug}`, `chore/{task}`. All feature branches MUST rebase (not merge) before opening a PR unless repository policy disallows.
 
-Pull Request Gates: (1) All tests PASS; (2) New tests added first commit; (3) Constitution principles checklist completed in plan.md Constitution Check section; (4) Complexity deviations table filled if any principle bent; (5) Context7 documentation validation completed for external library usage; (6) No unresolved [NEEDS CLARIFICATION] markers in related spec.
+Pull Request Gates: (1) Constitution principles checklist completed in plan.md Constitution Check section; (2) Complexity deviations table filled if any principle bent; (3) Context7 documentation validation completed for external library usage; (4) No unresolved [NEEDS CLARIFICATION] markers in related spec.
 
 Review: Minimum 1 qualified reviewer for PATCH, 2 for MINOR, 3 (including an architect steward) for MAJOR-impacting governance or architectural change.
 
-CI Pipeline Order: Lint → Type check → Unit tests → Contract tests → Integration tests → Coverage gate → Build → Security scan.
+CI Pipeline Order: Lint → Type check → Build → Security scan.
 
 Release Process: Automated version bump via commit semantics (`feat:` = MINOR, `fix:` = PATCH, `breaking:` tag or explicit indicator = MAJOR). Release notes auto-generated; manual curation for MAJOR. MCP & CLI artifacts version-locked together.
 
-Backporting: Only security and critical regression fixes; MUST include reproducible failing test cherry-picked first.
+Backporting: Only security and critical regression fixes; MUST include reproducible verification of the fix.
 
 ## Governance
 
 Authority: This constitution supersedes ad-hoc practices. Conflicts resolved in favor of the most recent ratified version.
 Amendments: Proposed via PR labeled `governance`. Include: (1) Motivation; (2) Impacted principles; (3) Version bump type justification; (4) Migration/rollout plan. MINOR requires ≥2 approvals; MAJOR requires ≥3 including architect steward and 1 rotating maintainer.
 Versioning Policy: Update **Version** metadata and include Sync Impact Report header changes describing deltas. Use Semantic Versioning rules defined in Principle V. A change that redefines or removes a principle is MAJOR. Adding a new enforceable constraint = MINOR. Textual clarifications (no normative effect) = PATCH.
-Compliance & Review: Every plan.md MUST translate principles into a Constitution Check gate list. CI MAY enforce automated detection (e.g., coverage thresholds, bundle size). Manual reviewers MUST reject PRs violating non-negotiable gates (Principle III & breaking changes without version bump).
+Compliance & Review: Every plan.md MUST translate principles into a Constitution Check gate list. CI MAY enforce automated detection (e.g., lint rules, security scans). Manual reviewers MUST reject PRs violating non-negotiable gates (breaking changes without version bump).
 Enforcement: Repeated violations trigger a hardening sprint where only remediation tasks are allowed until compliance restored.
 Sunset / Decommission: A principle may be deprecated (labeled "DEPRECATED" for ≥1 MINOR release) before removal in a MAJOR.
 Record Keeping: Maintain a CHANGELOG section for governance amendments referencing PR numbers.
 
-**Version**: 3.1.0 | **Ratified**: 2025-09-23 | **Last Amended**: 2025-09-23
+**Version**: 4.0.0 | **Ratified**: 2025-09-23 | **Last Amended**: 2025-09-23
