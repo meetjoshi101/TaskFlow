@@ -13,15 +13,15 @@ Derived from templates: Setup → Tests (failing first) → Core models/services
 
 ## Phase 3.1: Setup
 
-- [ ] T001 Initialize Angular workspace (if not present) with CLI: `ng new frontend --create-application=false --standalone --routing --strict --style=css --package-manager=pnpm` (root)
-- [ ] T002 Add libraries via CLI (library-first):
+- [X] T001 Initialize Angular workspace (if not present) with CLI: `ng new frontend --create-application=false --standalone --routing --strict --style=css --package-manager=pnpm` (root)
+- [X] T002 Add libraries via CLI (library-first):
   - `ng generate library core-data --standalone`
   - `ng generate library persistence --standalone`
   - `ng generate library ui-components --standalone`
   - `ng generate library feature-tasks --standalone`
-- [ ] T003 [P] Add `idb` dependency (optional wrapper) and update root README with storage rationale (`frontend/`): `pnpm add idb`
-- [ ] T004 Configure lint/test scripts in `frontend/package.json` (ensure test + lint commands exist, strict TS stays enabled)
-- [ ] T005 [P] Create initial directory placeholders for tests: `frontend/tests/{unit,contract,integration}` (align with plan structure)
+- [X] T003 [P] Add `idb` dependency (optional wrapper) and update root README with storage rationale (`frontend/`): `pnpm add idb`
+- [X] T004 Configure lint/test scripts in `frontend/package.json` (ensure test + lint commands exist, strict TS stays enabled)
+- [X] T005 [P] Create initial directory placeholders for tests: `frontend/tests/{unit,contract,integration}` (align with plan structure)
 
 ## Phase 3.2: Tests First (TDD) – MUST FAIL INITIALLY
 
