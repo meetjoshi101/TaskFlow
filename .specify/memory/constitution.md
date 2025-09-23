@@ -90,7 +90,7 @@ Rationale: Sustains long-term maintainability, user trust, and operational relia
  
 ## Additional Constraints
 
-Technology Stack: Angular (v18+), TypeScript ≥5.5, Node.js LTS (current active), Package manager: pnpm (preferred) or npm (if CI constraint). Use standalone components as the default pattern. Start with Angular's built-in features (signals, reactive forms, router) before adding external libraries. Build tooling MUST use Angular CLI defaults unless measurable improvement >10% demonstrated. Context7 MCP server MUST be used for documentation validation of all Angular and related library usage.
+Technology Stack: Angular (v20+), TypeScript ≥5.5, Node.js LTS (current active), Package manager: pnpm (preferred) or npm (if CI constraint). Use standalone components as the default pattern. Start with Angular's built-in features (signals, reactive forms, router) before adding external libraries. Build tooling MUST use Angular CLI defaults unless measurable improvement >10% demonstrated. Context7 MCP server MUST be used for documentation validation of all Angular and related library usage.
 
 Documentation: Every component and service MUST include: purpose, public API, usage examples, version notes. Architectural decision records (ADR) REQUIRED for: cross-cutting concerns, build pipeline deviations, or third-party library adoptions.
 
