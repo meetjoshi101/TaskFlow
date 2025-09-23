@@ -27,17 +27,17 @@ Derived from templates: Setup → Tests (failing first) → Core models/services
 
 User stories (5 acceptance + extended flows) + edge behaviors.
 
-- [ ] T006 [P] Contract test: persistence service create/list/update/delete soft delete flow in `frontend/tests/contract/persistence.spec.ts`
-- [ ] T007 [P] Contract test: UI state service persistence (filter & panel) in `frontend/tests/contract/ui-state.spec.ts`
-- [ ] T008 [P] Unit test: Task title validation (length, trim) in `frontend/tests/unit/task-validation.spec.ts`
-- [ ] T009 [P] Unit test: Ordering & restore insertion logic in `frontend/tests/unit/order-restore.spec.ts`
-- [ ] T010 [P] Integration test: Add → list → toggle complete in `frontend/tests/integration/add_toggle.spec.ts`
-- [ ] T011 [P] Integration test: Edit (inline) save & cancel scenarios in `frontend/tests/integration/edit_inline.spec.ts`
-- [ ] T012 [P] Integration test: Soft delete → restore → reload purge behavior in `frontend/tests/integration/soft_delete_restore.spec.ts`
-- [ ] T013 [P] Integration test: Bulk clear completed (confirmation required) in `frontend/tests/integration/bulk_clear.spec.ts`
-- [ ] T014 [P] Integration test: Filter persistence across reload + deleted panel state in `frontend/tests/integration/filter_persistence.spec.ts`
-- [ ] T015 [P] Integration test: Performance seed 500 tasks (timing assertion heuristic) in `frontend/tests/integration/perf_500.spec.ts`
-- [ ] T016 [P] Accessibility smoke test (keyboard traversal, ARIA roles, status text) in `frontend/tests/integration/a11y_smoke.spec.ts`
+- [X] T006 [P] Contract test: persistence service create/list/update/delete soft delete flow in `frontend/tests/contract/persistence.spec.ts`
+- [X] T007 [P] Contract test: UI state service persistence (filter & panel) in `frontend/tests/contract/ui-state.spec.ts`
+- [X] T008 [P] Unit test: Task title validation (length, trim) in `frontend/tests/unit/task-validation.spec.ts`
+- [X] T009 [P] Unit test: Ordering & restore insertion logic in `frontend/tests/unit/order-restore.spec.ts`
+- [X] T010 [P] Integration test: Add → list → toggle complete in `frontend/tests/integration/add_toggle.spec.ts`
+- [X] T011 [P] Integration test: Edit (inline) save & cancel scenarios in `frontend/tests/integration/edit_inline.spec.ts`
+- [X] T012 [P] Integration test: Soft delete → restore → reload purge behavior in `frontend/tests/integration/soft_delete_restore.spec.ts`
+- [X] T013 [P] Integration test: Bulk clear completed (confirmation required) in `frontend/tests/integration/bulk_clear.spec.ts`
+- [X] T014 [P] Integration test: Filter persistence across reload + deleted panel state in `frontend/tests/integration/filter_persistence.spec.ts`
+- [X] T015 [P] Integration test: Performance seed 500 tasks (timing assertion heuristic) in `frontend/tests/integration/perf_500.spec.ts`
+- [X] T016 [P] Accessibility smoke test (keyboard traversal, ARIA roles, status text) in `frontend/tests/integration/a11y_smoke.spec.ts`
 
 ## Phase 3.3: Core Models & Services (Implement after failing tests committed)
 
@@ -111,7 +111,9 @@ User stories (5 acceptance + extended flows) + edge behaviors.
 
 ## Parallel Execution Examples
 
-```MD
+```MDsudo apt-get update
+sudo apt-get install -y chromium-browser
+CHROME_BIN=$(which chromium-browser) pnpm test
 # Example 1: Write initial contract/integration/unit tests in parallel (T006-T016)
 Task: T006 persistence contract test
 Task: T007 UI state contract test
