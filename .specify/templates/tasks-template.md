@@ -96,9 +96,10 @@ Task: "Integration test auth in tests/integration/test_auth.py"
 - Verify tests fail before implementing
 - Commit after each task
 - Avoid: vague tasks, same file conflicts
+- Constitution Reference: v2.0.0 (`/memory/constitution.md`)
 
 ## Task Generation Rules
-*Applied during main() execution*
+Note: Applied during main() execution
 
 1. **From Contracts**:
    - Each contract file → contract test task [P]
@@ -117,7 +118,7 @@ Task: "Integration test auth in tests/integration/test_auth.py"
    - Dependencies block parallel execution
 
 ## Validation Checklist
-*GATE: Checked by main() before returning*
+Gate: Checked by main() before returning
 
 - [ ] All contracts have corresponding tests
 - [ ] All entities have model tasks
