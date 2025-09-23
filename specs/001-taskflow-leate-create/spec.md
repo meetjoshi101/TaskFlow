@@ -3,7 +3,7 @@
 **Feature Branch**: `001-taskflow-leate-create`  
 **Created**: 2025-09-23  
 **Status**: Draft  
-**Input**: User description: "Taskflow: leate create simple todo list, no backend, data will be stored in browser locally, focuse on main features only exclude the user management and authencation."
+**Input**: User description: "Taskflow: let me create simple todo list, no backend, data will be stored in browser locally, focus on main features only exclude the user management and authentication."
 
 ## Execution Flow (main)
 
