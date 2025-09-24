@@ -1,1 +1,7 @@
-<p>task-item works!</p>
+
+<div class="task-item" [class.completed]="task.completed">
+  <input type="checkbox" [checked]="task.completed" (change)="onToggleComplete()" />
+  <span *ngIf="!editing" (dblclick)="editing = true">{{ task.title }}</span>
+  <input *ngIf="editing" [value]="task.title" (blur)="onEdit($any($event.target).value); editing = false" (keyup.enter)="onEdit($any($event.target).value); editing = false" />
+  <button (click)="onDelete()">Delete</button>
+</div>

@@ -1,1 +1,5 @@
-<p>task-input works!</p>
+
+<form class="task-input" (submit)="$event.preventDefault(); addTask();">
+	<input type="text" [(ngModel)]="title" placeholder="Add a new task..." name="taskTitle" required />
+	<button type="submit">Add</button>
+</form>

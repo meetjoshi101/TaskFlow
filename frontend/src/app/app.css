@@ -1,0 +1,23 @@
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+/* Component spacing */
+app-filter-toolbar,
+app-task-input,
+app-task-list,
+app-deleted-panel {
+  display: block;
+  margin-bottom: 1.5rem;
+}

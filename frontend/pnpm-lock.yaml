@@ -29,6 +29,9 @@ importers:
       '@angular/router':
         specifier: ^20.3.0
         version: 20.3.1(@angular/common@20.3.1(@angular/core@20.3.1(@angular/compiler@20.3.1)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.1(@angular/compiler@20.3.1)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.1(@angular/common@20.3.1(@angular/core@20.3.1(@angular/compiler@20.3.1)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.1(@angular/compiler@20.3.1)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
+      '@types/uuid':
+        specifier: ^11.0.0
+        version: 11.0.0
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
@@ -1380,6 +1383,10 @@ packages:
 
   '@types/node@24.5.2':
     resolution: {integrity: sha512-FYxk1I7wPv3K2XBaoyH2cTnocQEu8AOZ60hPbsyukMPLv5/5qr7V1i8PLHdl6Zf87I+xZXFvPCXYjiTFq+YSDQ==}
+
+  '@types/uuid@11.0.0':
+    resolution: {integrity: sha512-HVyk8nj2m+jcFRNazzqyVKiZezyhDKrGUA3jlEcg/nZ6Ms+qHwocba1Y/AaVaznJTAM9xpdFSh+ptbNrhOGvZA==}
+    deprecated: This is a stub types definition. uuid provides its own type definitions, so you do not need this installed.
 
   '@typescript-eslint/eslint-plugin@8.40.0':
     resolution: {integrity: sha512-w/EboPlBwnmOBtRbiOvzjD+wdiZdgFeo17lkltrtn7X37vagKKWJABvyfsJXTlHe6XBzugmYgd4A4nW+k8Mixw==}
@@ -4606,6 +4613,10 @@ snapshots:
   '@types/node@24.5.2':
     dependencies:
       undici-types: 7.12.0
+
+  '@types/uuid@11.0.0':
+    dependencies:
+      uuid: 13.0.0
 
   '@typescript-eslint/eslint-plugin@8.40.0(@typescript-eslint/parser@8.40.0(eslint@9.36.0)(typescript@5.9.2))(eslint@9.36.0)(typescript@5.9.2)':
     dependencies:
