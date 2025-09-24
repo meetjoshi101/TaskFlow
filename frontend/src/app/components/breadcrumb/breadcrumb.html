@@ -1,0 +1,48 @@
+<nav
+  *ngIf="shouldShow()"
+  class="breadcrumb"
+  [attr.aria-label]="getBreadcrumbAriaLabel()"
+  role="navigation"
+>
+  <ol class="breadcrumb-list" role="list">
+    <!-- Navigable breadcrumb items -->
+    <li
+      *ngFor="let breadcrumb of navigableBreadcrumbs(); trackBy: trackByBreadcrumb"
+      class="breadcrumb-list-item"
+      role="none"
+    >
+      <a
+        [routerLink]="breadcrumb.route"
+        [ngClass]="getBreadcrumbClasses(breadcrumb)"
+        [attr.aria-current]="breadcrumb.isLast ? 'page' : null"
+        (click)="onBreadcrumbClick(breadcrumb)"
+        (keydown)="onBreadcrumbKeydown($event, breadcrumb)"
+      >
+        {{ breadcrumb.label }}
+      </a>
+      
+      <!-- Separator -->
+      <span 
+        class="breadcrumb-separator" 
+        [attr.aria-label]="getSeparatorAriaLabel()"
+        aria-hidden="true"
+      >
+        /
+      </span>
+    </li>
+    
+    <!-- Current page breadcrumb (non-clickable) -->
+    <li 
+      *ngIf="currentBreadcrumb()" 
+      class="breadcrumb-list-item breadcrumb-list-item--current"
+      role="none"
+    >
+      <span
+        [ngClass]="getBreadcrumbClasses(currentBreadcrumb()!)"
+        aria-current="page"
+      >
+        {{ currentBreadcrumb()!.label }}
+      </span>
+    </li>
+  </ol>
+</nav>

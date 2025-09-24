@@ -1,0 +1,153 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: #6b7280;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.breadcrumb-list-item {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+/* Breadcrumb items */
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-xs) 0;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 400;
+  transition: color var(--duration-fast) var(--ease-in-out);
+  border-radius: 4px;
+  min-height: 24px;
+}
+
+/* Clickable breadcrumb links */
+.breadcrumb-item--link {
+  color: var(--color-spring-teal-dark);
+  cursor: pointer;
+}
+
+.breadcrumb-item--link:hover {
+  color: #1f2937;
+  text-decoration: underline;
+}
+
+.breadcrumb-item--link:focus {
+  outline: 2px solid var(--color-spring-teal-dark);
+  outline-offset: 2px;
+  text-decoration: underline;
+}
+
+/* Current page breadcrumb */
+.breadcrumb-item--current {
+  color: #1f2937;
+  font-weight: 600;
+  cursor: default;
+}
+
+.breadcrumb-list-item--current .breadcrumb-item--current {
+  font-weight: 600;
+}
+
+/* Breadcrumb separator */
+.breadcrumb-separator {
+  margin: 0 var(--spacing-xs);
+  color: #d1d5db;
+  font-weight: 400;
+  user-select: none;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .breadcrumb {
+    font-size: var(--font-size-sm);
+  }
+  
+  .breadcrumb-list {
+    gap: 2px;
+  }
+  
+  .breadcrumb-separator {
+    margin: 0 var(--spacing-xs);
+  }
+  
+  /* Truncate long breadcrumb labels on mobile */
+  .breadcrumb-item {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Show only the last 2 breadcrumb items on very small screens */
+  .breadcrumb-list-item:not(:nth-last-child(-n+2)) {
+    display: none;
+  }
+  
+  /* Add ellipsis indicator when items are hidden */
+  .breadcrumb-list::before {
+    content: "...";
+    color: #6b7280;
+    margin-right: var(--spacing-xs);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .breadcrumb-item--link {
+    color: #000;
+    text-decoration: underline;
+  }
+  
+  .breadcrumb-item--link:focus {
+    outline: 3px solid #000;
+    background-color: #fff;
+  }
+  
+  .breadcrumb-item--current {
+    color: #000;
+  }
+  
+  .breadcrumb-separator {
+    color: #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .breadcrumb-item {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .breadcrumb {
+    font-size: 12px;
+    color: #000;
+  }
+  
+  .breadcrumb-item--link {
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .breadcrumb-separator {
+    color: #666;
+  }
+}

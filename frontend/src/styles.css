@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+	--breakpoint-xs: 475px;
+	--breakpoint-sm: 640px;
+	--breakpoint-md: 768px;
+	--breakpoint-lg: 1024px;
+	--breakpoint-xl: 1280px;
+	--breakpoint-2xl: 1536px;
+}
+
 :root {
 	/* Spring Happiness Color Palette */
 	--color-spring-rose: #AF7575;
@@ -26,6 +35,14 @@
 	--duration-normal: 300ms;
 	--duration-slow: 500ms;
 	--ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* Navigation System Variables */
+	--nav-sidebar-width-mobile: 280px;
+	--nav-sidebar-width-desktop: 250px;
+	--nav-topbar-height: 64px;
+	--nav-z-index-sidebar: 1000;
+	--nav-z-index-overlay: 999;
+	--nav-transition-duration: 300ms;
 }
 
 @media (min-width: 768px) {

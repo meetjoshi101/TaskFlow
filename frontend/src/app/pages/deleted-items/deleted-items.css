@@ -1,0 +1,331 @@
+.deleted-items-page {
+  padding: var(--spacing-lg);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.page-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.page-description {
+  color: #6b7280;
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid var(--color-spring-teal-dark);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--spacing-base);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-base);
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.empty-state-description {
+  color: #6b7280;
+  margin: 0 0 var(--spacing-lg) 0;
+  max-width: 400px;
+}
+
+/* Bulk actions toolbar */
+.bulk-actions-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-base);
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: var(--spacing-base);
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.selection-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+}
+
+.selection-count {
+  font-size: var(--font-size-sm);
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.bulk-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* Deleted tasks list */
+.deleted-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+}
+
+.deleted-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-base);
+  padding: var(--spacing-base);
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: white;
+  transition: all var(--duration-fast) var(--ease-in-out);
+}
+
+.deleted-task-item:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.deleted-task-item.selected {
+  border-color: var(--color-spring-teal-dark);
+  background-color: #f0fdfa;
+}
+
+/* Task selection */
+.task-selection {
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.task-selection input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Task details */
+.task-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 var(--spacing-xs) 0;
+  line-height: 1.4;
+}
+
+.task-description {
+  font-size: var(--font-size-sm);
+  color: #6b7280;
+  margin: 0 0 var(--spacing-sm) 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-base);
+  font-size: var(--font-size-sm);
+  color: #9ca3af;
+}
+
+.deleted-date {
+  font-weight: 500;
+}
+
+.original-category {
+  color: var(--color-spring-teal-dark);
+}
+
+/* Task actions */
+.task-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs) var(--spacing-base);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-in-out);
+  min-height: 36px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-sm {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  min-height: 32px;
+}
+
+.btn-primary {
+  background-color: var(--color-spring-teal-dark);
+  color: white;
+  border-color: var(--color-spring-teal-dark);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-success {
+  background-color: var(--color-spring-green);
+  color: #065f46;
+  border-color: var(--color-spring-green);
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #a3d977;
+  border-color: #a3d977;
+}
+
+.btn-danger {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #fecaca;
+  border-color: #f87171;
+}
+
+.btn-link {
+  background: none;
+  color: var(--color-spring-teal-dark);
+  border: none;
+  padding: var(--spacing-xs);
+  text-decoration: underline;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: #1f2937;
+}
+
+.btn:focus {
+  outline: 2px solid var(--color-spring-teal-dark);
+  outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .deleted-items-page {
+    padding: var(--spacing-base);
+  }
+  
+  .bulk-actions-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .selection-controls,
+  .bulk-actions {
+    justify-content: center;
+  }
+  
+  .deleted-task-item {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .task-actions {
+    align-self: stretch;
+    justify-content: stretch;
+  }
+  
+  .task-actions .btn {
+    flex: 1;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .deleted-task-item {
+    border-width: 2px;
+  }
+  
+  .deleted-task-item.selected {
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .btn:focus {
+    outline: 3px solid #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .deleted-task-item,
+  .btn,
+  .loading-spinner {
+    transition: none;
+    animation: none;
+  }
+}

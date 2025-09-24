@@ -1,0 +1,13 @@
+<div class="tasks-page">
+  <div class="page-header">
+    <h2 class="page-title">Tasks</h2>
+    <p class="page-description">Manage your active tasks and track your progress.</p>
+  </div>
+  
+  <div class="tasks-list">
+    <div *ngFor="let task of tasks" class="task-item" [class.completed]="task.completed">
+      <h3>{{ task.title }}</h3>
+      <span class="status">{{ task.completed ? 'Completed' : 'Active' }}</span>
+    </div>
+  </div>
+</div>

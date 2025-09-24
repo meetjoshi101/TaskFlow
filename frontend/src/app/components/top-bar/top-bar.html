@@ -1,0 +1,40 @@
+<header class="top-bar" role="banner">
+  <div class="top-bar-container">
+    <!-- Mobile hamburger menu button -->
+    <button
+      *ngIf="isMobileView()"
+      class="hamburger-menu"
+      type="button"
+      [attr.aria-label]="getMenuButtonAriaLabel()"
+      [attr.aria-expanded]="isSidebarOpen()"
+      aria-controls="sidebar-menu"
+      (click)="onToggleSidebar()"
+      (keydown)="onMenuKeydown($event)"
+    >
+      <div class="hamburger-lines" [class.open]="isSidebarOpen()">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </button>
+
+    <!-- Application name / logo -->
+    <div class="app-title">
+      <h1 class="app-name">
+        <a routerLink="/" class="app-link">
+          {{ applicationName }}
+        </a>
+      </h1>
+    </div>
+
+    <!-- Breadcrumb navigation -->
+    <nav class="breadcrumb-nav" *ngIf="shouldShowBreadcrumbs()" aria-label="Breadcrumb navigation">
+      <app-breadcrumb></app-breadcrumb>
+    </nav>
+
+    <!-- Right section for future features (user menu, notifications, etc.) -->
+    <div class="top-bar-actions">
+      <!-- Placeholder for future top bar actions -->
+    </div>
+  </div>
+</header>

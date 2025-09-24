@@ -1,9 +1,16 @@
-<section class="container">
-  <h1 class="text-3xl font-bold underline">TaskFlow To-Do List</h1>
-  <app-filter-toolbar [filter]="currentFilter" (filterChange)="currentFilter = $event"></app-filter-toolbar>
-  <app-task-input></app-task-input>
-  <app-task-list [filter]="currentFilter"></app-task-list>
-  <app-deleted-panel></app-deleted-panel>
-</section>
-
-<router-outlet />
+<div [ngClass]="getMainContainerClasses()">
+  <!-- Top navigation bar -->
+  <app-top-bar></app-top-bar>
+  
+  <!-- Main layout with sidebar and content -->
+  <div class="app-layout">
+    <!-- Sidebar navigation -->
+    <app-sidebar></app-sidebar>
+    
+    <!-- Main content area -->
+    <main [ngClass]="getMainContentClasses()" role="main">
+      <!-- Page content from routing -->
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
