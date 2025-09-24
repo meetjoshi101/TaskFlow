@@ -6,6 +6,7 @@
 **Input**: User description: "let's add styling to the todo list and make ui beautiful. the ui should be modern and pleasant to eye with attractive visual design."
 
 ## Execution Flow (main)
+
 ```
 1. Parse user description from Input
    → User wants modern, beautiful UI styling for todo list
@@ -42,6 +43,7 @@
 ---
 
 ## ⚡ Quick Guidelines
+
 - ✅ Focus on WHAT users need and WHY
 - ❌ Avoid HOW to implement (no tech stack, APIs, code structure)
 - 👥 Written for business stakeholders, not developers
@@ -125,3 +127,18 @@ GATE NOTE: Automated checks run during main() execution (Constitution v4.0.0 ali
 1. What specific color scheme preferences do you have for the UI?
 2. Are there any mobile responsiveness requirements we should consider?
 3. What accessibility standards should we follow for the design?
+
+---
+
+## Design Clarifications
+- **Color Scheme**: Brand-specific theme with custom "Spring Happiness" color palette (#AF7575, #EFD8A1, #BCD693, #AFD7DB, #3D9CA8)
+- **Responsive Design Breakpoints**: Desktop-focused: 768px (tablet), 1024px (desktop) only
+- **Accessibility Compliance**: WCAG 2.2 Level AA (latest standard with enhanced requirements)
+- **Animation Duration and Easing**: Variable duration based on element type and distance
+- **Text Overflow Handling**: Wrap text to multiple lines with max 2 lines
+
+### Design Framework
+- **Framework**: Tailwind CSS v4.1 will be used for designing the application.
+
+### Documentation and Research
+- **Documentation Tool**: Context7 will be utilized for documentation and research purposes.
