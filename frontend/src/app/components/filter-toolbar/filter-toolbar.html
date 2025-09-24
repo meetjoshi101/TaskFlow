@@ -1,7 +1,19 @@
 
 <div class="filter-toolbar">
-	<button [class.active]="filter === 'all'" (click)="setFilter('all')">All</button>
-	<button [class.active]="filter === 'active'" (click)="setFilter('active')">Active</button>
-	<button [class.active]="filter === 'completed'" (click)="setFilter('completed')">Completed</button>
-	<button (click)="clearCompleted()">Clear Completed</button>
+	<button class="filter-button" [ngClass]="{'filter-button--active': filter === 'all'}" (click)="setFilter('all')" aria-label="Show All">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/></svg>
+		All
+	</button>
+	<button class="filter-button" [ngClass]="{'filter-button--active': filter === 'active'}" (click)="setFilter('active')" aria-label="Show Active">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+		Active
+	</button>
+	<button class="filter-button" [ngClass]="{'filter-button--active': filter === 'completed'}" (click)="setFilter('completed')" aria-label="Show Completed">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2l4-4"/></svg>
+		Completed
+	</button>
+	<button class="filter-button" (click)="clearCompleted()" aria-label="Clear Completed">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+		Clear Completed
+	</button>
 </div>

@@ -1,7 +1,15 @@
 
-<div class="task-item" [class.completed]="task.completed">
+<div class="task-item" [ngClass]="{
+  'task-item--completed': task.completed,
+  'task-item--editing': editing,
+  'task-item--deleted': task.deleted
+}">
   <input type="checkbox" [checked]="task.completed" (change)="onToggleComplete()" />
   <span *ngIf="!editing" (dblclick)="editing = true">{{ task.title }}</span>
   <input *ngIf="editing" [value]="task.title" (blur)="onEdit($any($event.target).value); editing = false" (keyup.enter)="onEdit($any($event.target).value); editing = false" />
-  <button (click)="onDelete()">Delete</button>
+  <button class="delete-btn" (click)="onDelete()" aria-label="Delete Task">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
 </div>

@@ -1,5 +1,9 @@
 
-<form class="task-input" (submit)="$event.preventDefault(); addTask();">
-	<input type="text" [(ngModel)]="title" placeholder="Add a new task..." name="taskTitle" required />
-	<button type="submit">Add</button>
+<form class="task-input-form" (submit)="$event.preventDefault(); addTask();">
+	<input class="task-input-field" type="text" [(ngModel)]="title" placeholder="Add a new task..." name="taskTitle" required />
+	<button class="task-input-submit" type="submit" aria-label="Add Task">
+		<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+		</svg>
+	</button>
 </form>

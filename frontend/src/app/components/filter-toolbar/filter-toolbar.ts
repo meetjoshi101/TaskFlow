@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task';
 
@@ -12,10 +12,12 @@ import { TaskService } from '../../services/task';
 })
 export class FilterToolbar {
   private taskService = inject(TaskService);
-  filter: 'all' | 'active' | 'completed' = 'all';
+  @Input() filter: 'all' | 'active' | 'completed' = 'all';
+  @Output() filterChange = new EventEmitter<'all' | 'active' | 'completed'>();
 
   setFilter(f: 'all' | 'active' | 'completed') {
     this.filter = f;
+    this.filterChange.emit(f);
   }
 
   clearCompleted() {

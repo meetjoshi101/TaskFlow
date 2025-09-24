@@ -1,0 +1,28 @@
+
+.filter-toolbar {
+	display: flex;
+	gap: var(--spacing-sm);
+	margin-bottom: var(--spacing-base);
+}
+.filter-button {
+	background: #fff;
+	color: var(--color-spring-teal-dark);
+	border: 1px solid var(--color-spring-teal-light);
+	border-radius: var(--spacing-xs);
+	padding: var(--spacing-sm) var(--spacing-base);
+	font-size: var(--font-size-base);
+	cursor: pointer;
+	transition: background var(--duration-fast) var(--ease-in-out);
+}
+.filter-button--active {
+	background: var(--color-spring-teal-dark);
+	color: #fff;
+}
+.filter-count-badge {
+	background: var(--color-spring-yellow);
+	color: var(--color-spring-teal-dark);
+	border-radius: var(--spacing-xs);
+	padding: 0 var(--spacing-xs);
+	margin-left: var(--spacing-xs);
+	font-size: var(--font-size-sm);
+}

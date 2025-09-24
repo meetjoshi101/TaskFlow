@@ -1,0 +1,32 @@
+
+.task-input-form {
+	display: flex;
+	gap: var(--spacing-sm);
+	margin-bottom: var(--spacing-base);
+}
+.task-input-field {
+	flex: 1;
+	padding: var(--spacing-sm);
+	border: 1px solid var(--color-spring-teal-dark);
+	border-radius: var(--spacing-xs);
+	font-size: var(--font-size-base);
+	outline: none;
+	transition: border-color var(--duration-fast) var(--ease-in-out);
+}
+.task-input-field:focus {
+	border-color: var(--color-spring-rose);
+}
+.task-input-submit {
+	background: var(--color-spring-teal-dark);
+	color: #fff;
+	border: none;
+	border-radius: var(--spacing-xs);
+	padding: var(--spacing-sm) var(--spacing-base);
+	font-size: var(--font-size-base);
+	cursor: pointer;
+	transition: background var(--duration-fast) var(--ease-in-out);
+}
+.task-input-submit:disabled {
+	background: var(--color-spring-teal-light);
+	cursor: not-allowed;
+}

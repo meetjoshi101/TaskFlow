@@ -1,5 +1,5 @@
 
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../../services/task';
 import { Task } from '../../models/task.model';
@@ -14,7 +14,11 @@ import { TaskItem } from '../task-item/task-item';
 })
 export class TaskList {
   private taskService = inject(TaskService);
-  tasks = computed(() => this.taskService.filter(false));
+  @Input() filter: 'all' | 'active' | 'completed' = 'all';
+
+  get tasks() {
+    return this.taskService.filter(false, this.filter);
+  }
 
   onToggleComplete(id: string) {
     this.taskService.toggleComplete(id);

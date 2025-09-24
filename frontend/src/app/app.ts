@@ -8,10 +8,11 @@ import { FilterToolbar } from './components/filter-toolbar/filter-toolbar';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TaskList, TaskInput, TaskItem, DeletedPanel, FilterToolbar],
+  imports: [RouterOutlet, TaskList, TaskInput, DeletedPanel, FilterToolbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('frontend');
+  currentFilter: 'all' | 'active' | 'completed' = 'all';
 }

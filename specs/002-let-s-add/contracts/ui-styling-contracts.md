@@ -273,4 +273,29 @@ interface DeletedPanelStylingProps {
 **Build Integration**:
 - PostCSS pipeline processes Tailwind utilities
 - Angular CLI handles component scoping
-- CSS custom properties bridge global and component styles
+ CSS custom properties bridge global and component styles
+
+---
+
+## Contract Test Stubs (Phase 3.2)
+
+  
+## T005: TaskListComponent Styling Contract Test
+
+**Test**: Verify `.task-list-container`, `.task-list-empty-state`, `.task-list-loading` classes exist and match contract requirements. Check for responsive layout, empty state, and loading indicators.
+
+## T006: TaskItemComponent Styling Contract Test
+
+**Test**: Verify `.task-item`, `.task-item--completed`, `.task-item--editing`, `.task-item--deleted` classes exist and match contract requirements. Check for completion, hover, focus, and edit states.
+
+## T007: TaskInputComponent Styling Contract Test
+
+**Test**: Verify `.task-input-form`, `.task-input-field`, `.task-input-submit` classes exist and match contract requirements. Check for validation, focus, and loading states.
+
+## T008: FilterToolbarComponent Styling Contract Test
+
+**Test**: Verify `.filter-toolbar`, `.filter-button`, `.filter-button--active`, `.filter-count-badge` classes exist and match contract requirements. Check for tab-style filters and badges.
+
+## T009: DeletedPanelComponent Styling Contract Test
+
+**Test**: Verify `.deleted-panel`, `.deleted-panel--collapsed`, `.deleted-task-item` classes exist and match contract requirements. Check for animation, collapse, and empty state.

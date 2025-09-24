@@ -1,0 +1,27 @@
+
+.deleted-panel {
+	background: #f3f3f3;
+	color: #222;
+	border-radius: var(--spacing-base);
+	padding: var(--spacing-lg);
+	box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+	transition: max-height var(--duration-normal) var(--ease-in-out);
+	min-width: 320px;
+	max-width: 600px;
+	margin: 2rem auto 0 auto;
+}
+.deleted-panel--collapsed {
+	max-height: 0;
+	overflow: hidden;
+}
+.deleted-task-item {
+	background: #fff;
+	color: #444;
+	border-radius: var(--spacing-xs);
+	padding: var(--spacing-sm);
+	margin-bottom: var(--spacing-xs);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+}
