@@ -1,0 +1,10 @@
+
+<section class="deleted-panel">
+	<h3>Deleted Tasks</h3>
+	<ul>
+		<li *ngFor="let task of deletedTasks()">
+			<span>{{ task.title }}</span>
+			<button (click)="restoreTask(task.id)">Restore</button>
+		</li>
+	</ul>
+</section>

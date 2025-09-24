@@ -1,0 +1,10 @@
+
+<section class="task-list">
+	<app-task-item
+		*ngFor="let task of tasks()"
+		[task]="task"
+		(toggleComplete)="onToggleComplete($event)"
+		(delete)="onDelete($event)"
+		(edit)="onEdit($event.id, $event.title)">
+	</app-task-item>
+</section>

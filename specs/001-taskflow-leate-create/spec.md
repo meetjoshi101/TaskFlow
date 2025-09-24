@@ -14,10 +14,10 @@
   → Identify: actors (single end user), actions (create, view, manage tasks), data (tasks stored locally), constraints (no backend, no auth)
 3. For each unclear aspect:
   → Mark with [NEEDS CLARIFICATION: specific question]
-4. Fill User Scenarios & Testing section
+4. Fill User Scenarios section
   → If no clear user flow: ERROR "Cannot determine user scenarios"
 5. Generate Functional Requirements
-  → Each requirement must be testable
+  → Each requirement must be verifiable
   → Mark ambiguous requirements
 6. Identify Key Entities (tasks)
 7. Run Review Checklist
@@ -80,13 +80,26 @@ As a user, I want to create and manage a simple list of tasks directly in my bro
 - Marking a completed task back to active → Task retains its original creation-based position (stable ordering by creation time ascending).
 - Opening the app in two browser tabs and editing tasks → Changes made in one tab appear in another only after that tab is refreshed (no real-time multi-tab sync requirement).
 - Clearing browser site data → All tasks permanently removed (expected within local-only scope).
+- Restoring a soft-deleted task → Task reappears in its original creation-order position (ordering invariant preserved).
 - Rapidly adding many tasks (e.g., 500) → System remains responsive; rendering initial list of up to 500 tasks completes within ~1 second on a typical modern device.
 - Accessibility: All core actions (add, edit, toggle complete, delete, clear completed, filter) are operable via keyboard alone; focus order logical; completed state conveyed via text and not color alone; color contrast meets WCAG 2.1 AA for text.
+
+## Clarifications
+
+### Session 2025-09-23
+
+- Q: What storage mechanism should we standardize on for persisting tasks locally (impacts data model, migration strategy, and performance expectations)? → A: Use hybrid: tasks in IndexedDB (transactional) & operational UI state in localStorage.
+- Q: How should inline task title editing be confirmed (affects UX flow, keyboard handling, and accessibility)? → A: Save on Enter; Escape cancels; blur saves (implicit save on focus loss).
+- Q: Should the bulk "Clear Completed" action require an explicit confirmation step to prevent accidental data loss? → A: Yes: confirmation dialog required before clearing.
+- Q: Do we need an explicit undo capability for destructive single-task deletes (retention & restore semantics)? → A: Soft delete with restore panel; tasks hidden from main list, restorable until reload; purge on reload (no persistence of deleted items).
+- Q: How should the filter and Deleted panel open state persist across reloads? → A: Persist both primary filter and Deleted panel open/closed state via localStorage.
 
 ## Assumptions & Decisions (Derived)
 
 - Single user context only; no profiles or authentication.
-- Local persistence uses browser-provided storage (conceptual; mechanism unspecified) and is device+browser specific.
+- Local persistence clarified: Tasks (transactional data) stored in an IndexedDB object store (record-level updates, scalable to target volume); operational UI state (e.g., current filter selection, last used edit state) stored in localStorage (single-key simple retrieval). All data remains device+browser specific; no remote or cross-device sync.
+- Soft delete model: Deleting a task removes it from persisted active data and places it in an in-memory session-only buffer for potential restoration; buffer is not persisted and is cleared on page reload.
+- UI state persistence: Current filter selection and Deleted panel open/closed state persisted in localStorage; upon reload these states restore before initial render.
 - Task filtering (All / Active / Completed) is in scope for initial release.
 - Inline title editing is supported (single interaction to enter edit mode, then save or cancel).
 - Bulk "Clear Completed" action included (optional convenience categorized as SHOULD, not MUST).
@@ -106,21 +119,23 @@ As a user, I want to create and manage a simple list of tasks directly in my bro
 - **FR-001**: The system MUST allow the user to add a new task with a title 1–140 characters after trimming leading/trailing whitespace; empty or over-length submissions are rejected without creating a task.
 - **FR-002**: The system MUST display a list of all existing tasks in ascending creation order (oldest first).
 - **FR-003**: The system MUST allow the user to mark a task as completed and to revert a completed task to active state.
-- **FR-004**: The system MUST allow the user to delete an existing task; deletion immediately removes it from the list and persistence layer.
+- **FR-004**: The system MUST allow the user to delete an existing task; deletion removes it from the active task list and persisted active collection, placing it into a session-scoped in-memory soft-deleted buffer until page reload or manual restore.
 - **FR-005**: The system MUST persist tasks locally so they remain available after a browser page reload on the same device and browser (no remote or cross-device sync).
 - **FR-006**: The system MUST function without network connectivity after initial load for all core actions (add, view, toggle complete, edit, delete, filter, clear completed).
 - **FR-007**: The system MUST exclude user accounts, user management flows, and authentication steps.
 - **FR-008**: The system SHOULD visually and textually differentiate completed vs active tasks using more than color alone (e.g., text decoration plus status label) while preserving readability.
-- **FR-009**: The system SHOULD allow inline editing of a task title in place via a single user action (e.g., initiating edit and confirming or cancelling) while preserving ordering.
-- **FR-010**: The system SHOULD provide a bulk action to remove all completed tasks in one step after user confirmation.
+- **FR-009**: The system SHOULD allow inline editing of a task title in place via a single user action while preserving ordering. Editing behavior: Enter saves; blur (focus loss) saves; Escape cancels and reverts original title; rejected (empty/over-length) edits do not alter stored value and surface a non-destructive message.
+- **FR-010**: The system SHOULD provide a bulk action to remove all completed tasks in one step and MUST present a confirmation dialog (explicit user affirmation) before permanently deleting completed tasks.
 - **FR-011**: The system SHOULD display task counts: total, active, and completed, updating in real time with changes.
-- **FR-012**: The system SHOULD allow filtering tasks by status: All, Active, Completed; selected filter persists during the session (until reload).
+- **FR-012**: The system SHOULD allow filtering tasks by status: All, Active, Completed; selected filter persists across reloads (restored from localStorage).
 - **FR-013**: The system MUST maintain a consistent ordering rule (creation time ascending) regardless of completion status changes.
 - **FR-014**: The system SHOULD display the empty state message "No tasks yet – add your first task." when no tasks exist.
 - **FR-015**: The system MUST allow duplicate task titles; no uniqueness constraint is enforced.
 - **FR-016**: The system MUST not expose any user-identifiable data beyond task titles stored locally.
 - **FR-017**: The system SHOULD adapt layout for viewport widths ≥320px (mobile), ≥768px (tablet adjustments), and ≥1024px (desktop) without horizontal scrolling for core content.
 - **FR-018**: The system SHOULD handle up to 500 tasks while keeping initial render and filter operations perceptibly responsive (target: initial list render under ~1 second on a typical modern device).
+- **FR-019**: The system SHOULD provide a session-scoped Deleted panel listing soft-deleted tasks with ability to restore each individually (restoring re-inserts task at original creation-order position) until page reload purges them.
+- **FR-020**: The system SHOULD persist the Deleted panel open/closed UI state across reloads so that the interface restores the previous visibility state on load.
 
 ### Key Entities *(include if feature involves data)*
 

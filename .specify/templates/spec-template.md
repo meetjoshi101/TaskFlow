@@ -85,7 +85,7 @@ When creating this spec from a user prompt:
 ---
 
 ## Review & Acceptance Checklist
-GATE NOTE: Automated checks run during main() execution (Constitution v2.1.0 alignment)
+GATE NOTE: Automated checks run during main() execution (Constitution v4.0.0 alignment)
 
 ### Content Quality
 - [ ] No implementation details (languages, frameworks, APIs)
