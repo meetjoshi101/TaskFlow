@@ -21,10 +21,14 @@ export class AppComponent implements OnInit {
   readonly isSidebarOpen = this.navigationService.isSidebarOpen;
   
   constructor() {
-    // Effect to sync viewport state with navigation service
+    // Safe viewport state sync - only update when mobile state actually changes
+    let previousMobileState: boolean | null = null;
     effect(() => {
       const viewport = this.viewportService.viewportState();
-      this.navigationService.updateMobileViewState(viewport.isMobile);
+      if (previousMobileState !== viewport.isMobile) {
+        previousMobileState = viewport.isMobile;
+        this.navigationService.updateMobileViewState(viewport.isMobile);
+      }
     });
   }
   

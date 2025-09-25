@@ -2,6 +2,11 @@
   <div class="page-header">
     <h2 class="page-title">Tasks</h2>
     <p class="page-description">Manage your active tasks and track your progress.</p>
+    
+    <!-- Token indicator -->
+    <div *ngIf="token" class="token-info">
+      <p class="token-message">✓ Token authentication successful</p>
+    </div>
   </div>
   
   <div class="tasks-list">

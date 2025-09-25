@@ -153,9 +153,13 @@ export class NavigationService {
    */
   private updateActiveNavigationItem(route: string): void {
     const currentState = this._navigationState();
+    
+    // Extract pathname from URL (ignore query parameters and fragments)
+    const routePath = route.split('?')[0].split('#')[0];
+    
     const updatedItems = currentState.navigationItems.map(item => ({
       ...item,
-      isActive: item.route === route
+      isActive: item.route === routePath
     }));
     
     this._navigationState.set({
@@ -168,11 +172,14 @@ export class NavigationService {
    * Generate breadcrumbs from route
    */
   private generateBreadcrumbs(route: string): BreadcrumbItem[] {
-    if (!route || route === '/') {
+    // Extract pathname from URL (ignore query parameters and fragments)
+    const routePath = route.split('?')[0].split('#')[0];
+    
+    if (!routePath || routePath === '/') {
       return [{ label: 'Home', route: '/', isLast: true }];
     }
     
-    const segments = route.split('/').filter(segment => segment.length > 0);
+    const segments = routePath.split('/').filter(segment => segment.length > 0);
     const breadcrumbs: BreadcrumbItem[] = [
       { label: 'Home', route: '/', isLast: false }
     ];

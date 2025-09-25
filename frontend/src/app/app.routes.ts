@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  // Default route - redirect to tasks
+  // Default route - redirect to tasks, preserving query params
   {
     path: '',
     redirectTo: '/tasks',
