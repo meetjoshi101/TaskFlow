@@ -10,12 +10,24 @@
 }
 
 :root {
-	/* Spring Happiness Color Palette */
-	--color-spring-rose: #AF7575;
-	--color-spring-yellow: #EFD8A1;
-	--color-spring-green: #BCD693;
-	--color-spring-teal-light: #AFD7DB;
-	--color-spring-teal-dark: #3D9CA8;
+	/* Core Brand */
+	--color-primary: #0C172F;
+	--color-secondary: #6D3263;
+	--color-accent: #DF6283;
+
+	/* Status Colors */
+	--color-success: #2F9E44;
+	--color-warning: #FCFCA4;
+	--color-error: #E64545;   /* tweaked for clarity */
+	--color-info: #3A7DFF;
+
+	/* Neutrals */
+	--color-neutral-100: #F5F7FA;
+	--color-neutral-200: #E4E6EB;
+	--color-neutral-300: #AEB5C5;
+	--color-neutral-400: #6C748C;
+	--color-neutral-500: #2C3449;
+	--color-neutral-900: #0C172F; /* ties back to primary */
 
 	/* Spacing System */
 	--spacing-xs: 0.25rem;
