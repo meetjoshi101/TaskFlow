@@ -6,6 +6,7 @@
 
 .page-header {
   margin-bottom: var(--spacing-xl);
+  margin-top: 0; /* Ensure no top margin */
 }
 
 .page-title {

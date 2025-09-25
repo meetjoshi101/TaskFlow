@@ -10,7 +10,9 @@
     <!-- Main content area -->
     <main [ngClass]="getMainContentClasses()" role="main">
       <!-- Page content from routing -->
-      <router-outlet></router-outlet>
+      <div class="router-content">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </div>
 </div>

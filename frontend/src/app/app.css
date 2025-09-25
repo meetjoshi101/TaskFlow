@@ -42,9 +42,42 @@
 }
 
 /* Page content styling - Remove default padding to prevent double padding */
-.main-content > * {
+.main-content > .router-content {
   flex: 1;
   padding: 0;
+  margin: 0;
+}
+
+/* Router outlet styling - ensure no extra spacing */
+router-outlet {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Router content wrapper */
+.router-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure page components don't add unwanted margins */
+.router-content > * {
+  margin: 0;
+  width: 100%;
+  flex: 1;
+}
+
+/* Ensure routed components fill the container properly */
+.main-content > router-outlet + * {
+  flex: 1;
+  width: 100%;
+  height: 100%;
 }
 
 /* High contrast mode support */
