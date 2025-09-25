@@ -1,7 +1,8 @@
 /* Main app container */
 .main-container {
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #f8fafc;
+  position: relative;
 }
 
 /* App layout */
@@ -9,6 +10,7 @@
   display: flex;
   min-height: calc(100vh - var(--nav-topbar-height));
   margin-top: var(--nav-topbar-height);
+  position: relative;
 }
 
 /* Main content area */
@@ -18,11 +20,14 @@
   flex-direction: column;
   min-width: 0; /* Allow flex item to shrink */
   background-color: white;
+  padding: var(--spacing-lg);
+  min-height: calc(100vh - var(--nav-topbar-height));
 }
 
 /* Desktop layout with sidebar */
 .main-content--with-sidebar {
   margin-left: var(--nav-sidebar-width-desktop);
+  transition: margin-left var(--nav-transition-duration) var(--ease-in-out);
 }
 
 /* Mobile responsive */
@@ -30,19 +35,16 @@
   .main-content--with-sidebar {
     margin-left: 0;
   }
-}
-
-/* Page content styling */
-.main-content > * {
-  flex: 1;
-  padding: var(--spacing-lg);
-}
-
-/* Responsive padding */
-@media (max-width: 640px) {
-  .main-content > * {
+  
+  .main-content {
     padding: var(--spacing-base);
   }
+}
+
+/* Page content styling - Remove default padding to prevent double padding */
+.main-content > * {
+  flex: 1;
+  padding: 0;
 }
 
 /* High contrast mode support */

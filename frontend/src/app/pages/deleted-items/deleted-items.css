@@ -1,7 +1,7 @@
 .deleted-items-page {
-  padding: var(--spacing-lg);
   max-width: 800px;
   margin: 0 auto;
+  width: 100%;
 }
 
 /* Page header */
