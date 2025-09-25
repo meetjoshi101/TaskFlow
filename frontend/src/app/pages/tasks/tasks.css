@@ -15,12 +15,12 @@
 .page-title {
   font-size: var(--font-size-xl);
   font-weight: 600;
-  color: #1f2937;
+  color: var(--color-neutral-500);
   margin: 0 0 var(--spacing-sm) 0;
 }
 
 .page-description {
-  color: #6b7280;
+  color: var(--color-neutral-400);
   margin: 0;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .task-item:hover {
-  border-color: var(--color-spring-teal-dark);
+  border-color: var(--color-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
@@ -72,7 +72,7 @@
 .task-item h3 {
   margin: 0;
   font-size: var(--font-size-base);
-  color: #1f2937;
+  color: var(--color-neutral-500);
 }
 
 .status {
@@ -80,11 +80,11 @@
   padding: var(--spacing-xs) var(--spacing-sm);
   border-radius: 12px;
   font-weight: 500;
-  background-color: #f3f4f6;
-  color: #6b7280;
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-400);
 }
 
 .task-item.completed .status {
-  background-color: var(--color-spring-green);
+  background-color: var(--color-success);
   color: #065f46;
 }

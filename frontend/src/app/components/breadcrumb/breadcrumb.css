@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   font-size: var(--font-size-sm);
-  color: #6b7280;
+  color: var(--color-neutral-400);
 }
 
 .breadcrumb-list {
@@ -36,24 +36,24 @@
 
 /* Clickable breadcrumb links */
 .breadcrumb-item--link {
-  color: var(--color-spring-teal-dark);
+  color: var(--color-primary);
   cursor: pointer;
 }
 
 .breadcrumb-item--link:hover {
-  color: #1f2937;
+  color: var(--color-neutral-500);
   text-decoration: underline;
 }
 
 .breadcrumb-item--link:focus {
-  outline: 2px solid var(--color-spring-teal-dark);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
   text-decoration: underline;
 }
 
 /* Current page breadcrumb */
 .breadcrumb-item--current {
-  color: #1f2937;
+  color: var(--color-neutral-500);
   font-weight: 600;
   cursor: default;
 }
@@ -65,7 +65,7 @@
 /* Breadcrumb separator */
 .breadcrumb-separator {
   margin: 0 var(--spacing-xs);
-  color: #d1d5db;
+  color: var(--color-neutral-200);
   font-weight: 400;
   user-select: none;
 }
@@ -102,7 +102,7 @@
   /* Add ellipsis indicator when items are hidden */
   .breadcrumb-list::before {
     content: "...";
-    color: #6b7280;
+    color: var(--color-neutral-400);
     margin-right: var(--spacing-xs);
   }
 }
