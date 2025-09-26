@@ -8,11 +8,117 @@
       <p class="token-message">✓ Token authentication successful</p>
     </div>
   </div>
-  
-  <div class="tasks-list">
-    <div *ngFor="let task of tasks" class="task-item" [class.completed]="task.completed">
-      <h3>{{ task.title }}</h3>
-      <span class="status">{{ task.completed ? 'Completed' : 'Active' }}</span>
+
+  <!-- Add Task Form -->
+  <div class="add-task-section">
+    <div class="add-task-form">
+      <input 
+        type="text" 
+        [value]="newTaskTitle()"
+        (input)="newTaskTitle.set($any($event.target).value)"
+        (keyup.enter)="addTask()"
+        placeholder="Enter a new task..."
+        class="task-input"
+      >
+      <button 
+        (click)="addTask()" 
+        [disabled]="!newTaskTitle().trim()"
+        class="add-button"
+      >
+        Add Task
+      </button>
     </div>
+  </div>
+
+  <!-- Task Statistics -->
+  <div class="task-stats">
+    <div class="stat-item">
+      <span class="stat-number">{{ activeTasks.length }}</span>
+      <span class="stat-label">Active</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ completedTasks.length }}</span>
+      <span class="stat-label">Completed</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">{{ tasks.length }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+  </div>
+
+  <!-- Filter Buttons -->
+  <div class="filter-section">
+    <button 
+      (click)="setFilter('all')" 
+      [class.active]="filter() === 'all'"
+      class="filter-button"
+    >
+      All
+    </button>
+    <button 
+      (click)="setFilter('active')" 
+      [class.active]="filter() === 'active'"
+      class="filter-button"
+    >
+      Active
+    </button>
+    <button 
+      (click)="setFilter('completed')" 
+      [class.active]="filter() === 'completed'"
+      class="filter-button"
+    >
+      Completed
+    </button>
+  </div>
+  
+  <!-- Tasks List -->
+  <div class="tasks-list">
+    <div *ngIf="tasks.length === 0" class="no-tasks">
+      <p class="no-tasks-message">
+        <span *ngIf="filter() === 'all'">No tasks yet. Add one above to get started!</span>
+        <span *ngIf="filter() === 'active'">No active tasks. Great job!</span>
+        <span *ngIf="filter() === 'completed'">No completed tasks yet.</span>
+      </p>
+    </div>
+
+    <div *ngFor="let task of tasks" class="task-item" [class.completed]="task.completed">
+      <div class="task-checkbox">
+        <input 
+          type="checkbox" 
+          [checked]="task.completed"
+          (change)="toggleTaskComplete(task.id)"
+          class="checkbox"
+        >
+      </div>
+      
+      <div class="task-content" [class.completed-text]="task.completed">
+        <h3 class="task-title">{{ task.title }}</h3>
+        <p class="task-date">Created {{ task.createdAt | date:'short' }}</p>
+      </div>
+      
+      <div class="task-actions">
+        <button 
+          (click)="toggleTaskComplete(task.id)"
+          [class.complete-btn]="!task.completed"
+          [class.uncomplete-btn]="task.completed"
+          class="action-button toggle-btn"
+        >
+          {{ task.completed ? 'Undo' : 'Complete' }}
+        </button>
+        <button 
+          (click)="deleteTask(task.id)"
+          class="action-button delete-btn"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear Completed Button -->
+  <div *ngIf="completedTasks.length > 0" class="clear-section">
+    <button (click)="clearCompleted()" class="clear-completed-btn">
+      Clear {{ completedTasks.length }} Completed Task{{ completedTasks.length === 1 ? '' : 's' }}
+    </button>
   </div>
 </div>

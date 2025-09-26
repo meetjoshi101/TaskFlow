@@ -3,18 +3,12 @@
   <div class="page-header">
     <h2 class="page-title">Deleted Items</h2>
     <p class="page-description">
-      Manage and restore deleted tasks. Items will be permanently removed after 30 days.
+      Manage and restore deleted tasks. You can restore tasks or permanently delete them.
     </p>
   </div>
 
-  <!-- Loading state -->
-  <div *ngIf="isLoading" class="loading-state">
-    <div class="loading-spinner" aria-label="Loading deleted items"></div>
-    <p>Loading deleted items...</p>
-  </div>
-
   <!-- Empty state -->
-  <div *ngIf="!isLoading && deletedTasks.length === 0" class="empty-state">
+  <div *ngIf="deletedTasks.length === 0" class="empty-state">
     <div class="empty-state-icon" aria-hidden="true">🗑️</div>
     <h3 class="empty-state-title">No deleted items</h3>
     <p class="empty-state-description">
@@ -30,9 +24,9 @@
   </div>
 
   <!-- Tasks list -->
-  <div *ngIf="!isLoading && deletedTasks.length > 0" class="deleted-tasks-section">
+  <div *ngIf="deletedTasks.length > 0" class="deleted-tasks-section">
     <!-- Bulk actions toolbar -->
-    <div class="bulk-actions-toolbar" *ngIf="deletedTasks.length > 0">
+    <div class="bulk-actions-toolbar">
       <div class="selection-controls">
         <button
           class="btn btn-link"
@@ -80,15 +74,12 @@
         <!-- Task details -->
         <div class="task-details">
           <h4 class="task-title">{{ task.title }}</h4>
-          <p *ngIf="task.description" class="task-description">
-            {{ task.description }}
-          </p>
           <div class="task-meta">
             <span class="deleted-date">
-              Deleted on {{ formatDate(task.deletedAt) }}
+              Created {{ formatDate(task.createdAt) }}
             </span>
-            <span *ngIf="task.originalCategory" class="original-category">
-              Category: {{ task.originalCategory }}
+            <span class="task-status">
+              {{ task.completed ? 'Was completed' : 'Was active' }}
             </span>
           </div>
         </div>

@@ -1,15 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { NavigationService } from '../../services/navigation.service';
 import { ViewportService } from '../../services/viewport.service';
-
-interface DeletedTask {
-  id: string;
-  title: string;
-  description?: string;
-  deletedAt: Date;
-  originalCategory?: string;
-}
+import { TaskService } from '../../services/task';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-deleted-items',
@@ -20,63 +15,30 @@ interface DeletedTask {
 export class DeletedItemsComponent implements OnInit {
   private readonly navigationService = inject(NavigationService);
   private readonly viewportService = inject(ViewportService);
+  private readonly taskService = inject(TaskService);
+  private readonly router = inject(Router);
   
   readonly isMobileView = this.viewportService.isMobile;
   
-  deletedTasks: DeletedTask[] = [];
   selectedTasks: Set<string> = new Set();
   isLoading = false;
-  
-  ngOnInit(): void {
-    this.loadDeletedTasks();
+
+  // Get deleted tasks from the task service
+  get deletedTasks(): Task[] {
+    return this.taskService.filter(true, 'all').filter(task => task.deleted);
   }
   
-  /**
-   * Load deleted tasks from storage or service
-   */
-  private loadDeletedTasks(): void {
-    this.isLoading = true;
-    
-    // Simulate loading deleted tasks
-    // In a real app, this would come from a service/API
-    setTimeout(() => {
-      this.deletedTasks = [
-        {
-          id: '1',
-          title: 'Sample Deleted Task 1',
-          description: 'This is a sample deleted task for testing',
-          deletedAt: new Date('2025-09-20'),
-          originalCategory: 'Work'
-        },
-        {
-          id: '2',
-          title: 'Sample Deleted Task 2',
-          description: 'Another sample deleted task',
-          deletedAt: new Date('2025-09-19'),
-          originalCategory: 'Personal'
-        }
-      ];
-      this.isLoading = false;
-    }, 500);
+  ngOnInit(): void {
+    // No need to load tasks manually - using getter from TaskService
   }
   
   /**
    * Restore a single task
    */
   restoreTask(taskId: string): void {
-    const task = this.deletedTasks.find(t => t.id === taskId);
-    if (!task) return;
-    
-    // Remove from deleted tasks
-    this.deletedTasks = this.deletedTasks.filter(t => t.id !== taskId);
+    this.taskService.restore(taskId);
     this.selectedTasks.delete(taskId);
-    
-    // In a real app, this would call a service to restore the task
-    console.log(`Restored task: ${task.title}`);
-    
-    // Show success message (could be implemented with a toast service)
-    // For now, just log success
-    console.log(`Task "${task.title}" has been restored successfully`);
+    console.log(`Task restored successfully`);
   }
   
   /**
@@ -86,9 +48,10 @@ export class DeletedItemsComponent implements OnInit {
     const tasksToRestore = Array.from(this.selectedTasks);
     
     tasksToRestore.forEach(taskId => {
-      this.restoreTask(taskId);
+      this.taskService.restore(taskId);
     });
     
+    this.selectedTasks.clear();
     console.log(`Restored ${tasksToRestore.length} tasks`);
   }
   
@@ -100,7 +63,8 @@ export class DeletedItemsComponent implements OnInit {
     if (!task) return;
     
     if (confirm(`Are you sure you want to permanently delete "${task.title}"? This action cannot be undone.`)) {
-      this.deletedTasks = this.deletedTasks.filter(t => t.id !== taskId);
+      // Remove from the tasks array permanently
+      this.taskService.tasks.update(tasks => tasks.filter(t => t.id !== taskId));
       this.selectedTasks.delete(taskId);
       
       console.log(`Permanently deleted task: ${task.title}`);
@@ -166,24 +130,26 @@ export class DeletedItemsComponent implements OnInit {
    * Navigate back to tasks
    */
   navigateToTasks(): void {
-    this.navigationService.navigateTo('/tasks');
+    this.router.navigate(['/tasks']);
   }
   
   /**
    * Format date for display
    */
-  formatDate(date: Date): string {
+  formatDate(timestamp: number): string {
     return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
-    }).format(date);
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(new Date(timestamp));
   }
   
   /**
    * Track tasks for *ngFor performance
    */
-  trackByTask(index: number, task: DeletedTask): string {
+  trackByTask(index: number, task: Task): string {
     return task.id;
   }
 }

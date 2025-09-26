@@ -55,7 +55,7 @@ export class TaskService {
     this.saveTasks();
   }
 
-  filter(showDeleted: boolean = false, filter: 'all' | 'active' | 'completed' = 'all'): Task[] {
+  filter(showDeleted = false, filter: 'all' | 'active' | 'completed' = 'all'): Task[] {
     let filtered = this.tasks();
     if (!showDeleted) filtered = filtered.filter(t => !t.deleted);
     if (filter === 'active') filtered = filtered.filter(t => !t.completed);
