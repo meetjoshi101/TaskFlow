@@ -1,0 +1,38 @@
+<div [ngClass]="getContainerClasses()">
+  <!-- Icon -->
+  <div class="empty-state-icon" *ngIf="config.icon" aria-hidden="true">
+    {{ config.icon }}
+  </div>
+  
+  <!-- Title -->
+  <h3 class="empty-state-title">
+    {{ config.title }}
+  </h3>
+  
+  <!-- Description -->
+  <p class="empty-state-description">
+    {{ config.description }}
+  </p>
+  
+  <!-- Action button -->
+  <div class="empty-state-actions" *ngIf="hasAction()">
+    <!-- Router link action -->
+    <a
+      *ngIf="config.actionRoute && !config.actionCallback"
+      [routerLink]="config.actionRoute"
+      class="btn btn-primary"
+    >
+      {{ config.actionText }}
+    </a>
+    
+    <!-- Callback action -->
+    <button
+      *ngIf="config.actionCallback && !config.actionRoute"
+      class="btn btn-primary"
+      type="button"
+      (click)="onActionClick()"
+    >
+      {{ config.actionText }}
+    </button>
+  </div>
+</div>

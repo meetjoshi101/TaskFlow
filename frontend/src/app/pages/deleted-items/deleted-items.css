@@ -1,0 +1,274 @@
+.deleted-items-page {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+/* Page header */
+.page-header {
+  margin-bottom: 2rem;
+  margin-top: 0;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+}
+
+.page-description {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-state-description {
+  color: #6b7280;
+  margin: 0 0 2rem 0;
+  max-width: 400px;
+}
+
+/* Bulk actions toolbar */
+.bulk-actions-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.selection-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.selection-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.bulk-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Deleted tasks list */
+.deleted-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.deleted-task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.deleted-task-item:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.deleted-task-item.selected {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* Task selection */
+.task-selection {
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.task-selection input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+/* Task details */
+.task-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.task-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #9ca3af;
+}
+
+.deleted-date {
+  font-weight: 500;
+}
+
+.task-status {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Task actions */
+.task-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 36px;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-sm {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  min-height: 32px;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-success {
+  background-color: #10b981;
+  color: white;
+  border-color: #10b981;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #059669;
+  border-color: #059669;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background-color: #dc2626;
+  border-color: #dc2626;
+}
+
+.btn-link {
+  background: none;
+  color: #3b82f6;
+  border: none;
+  padding: 0.5rem;
+  text-decoration: underline;
+}
+
+.btn-link:hover:not(:disabled) {
+  color: #1f2937;
+}
+
+.btn:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .deleted-items-page {
+    padding: 0 0.75rem;
+  }
+  
+  .bulk-actions-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .selection-controls,
+  .bulk-actions {
+    justify-content: center;
+  }
+  
+  .deleted-task-item {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .task-actions {
+    align-self: stretch;
+    justify-content: stretch;
+  }
+  
+  .task-actions .btn {
+    flex: 1;
+  }
+}

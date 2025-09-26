@@ -1,23 +1,101 @@
-.container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Main app container */
+.main-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  position: relative;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
-  font-weight: 300;
+/* App layout */
+.app-layout {
+  display: flex;
+  min-height: calc(100vh - var(--nav-topbar-height));
+  margin-top: var(--nav-topbar-height);
+  position: relative;
 }
 
-/* Component spacing */
-app-filter-toolbar,
-app-task-input,
-app-task-list,
-app-deleted-panel {
+/* Main content area */
+.main-content {
+  flex: 1;
   display: block;
-  margin-bottom: 1.5rem;
+  min-width: 0; /* Allow flex item to shrink */
+  background-color: white;
+  padding: var(--spacing-lg);
+  min-height: calc(100vh - var(--nav-topbar-height));
+}
+
+/* Desktop layout with sidebar */
+.main-content--with-sidebar {
+  margin-left: var(--nav-sidebar-width-desktop);
+  transition: margin-left var(--nav-transition-duration) var(--ease-in-out);
+}
+
+/* Mobile responsive */
+@media (max-width: 1023px) {
+  .main-content--with-sidebar {
+    margin-left: 0;
+  }
+  
+  .main-content {
+    padding: var(--spacing-base);
+  }
+}
+
+/* Page content styling - Remove default padding to prevent double padding */
+.main-content > .router-content {
+  padding: 0;
+  margin: 0;
+}
+
+/* Router outlet styling - ensure no extra spacing */
+router-outlet {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Router content wrapper */
+.router-content {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure page components don't add unwanted margins */
+.router-content > * {
+  margin: 0;
+  width: 100%;
+}
+
+/* Ensure routed components fill the container properly */
+.main-content > router-outlet + * {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .main-container {
+    background-color: #fff;
+  }
+  
+  .main-content {
+    background-color: #fff;
+    border: 1px solid #000;
+  }
+}
+
+/* Print styles */
+@media print {
+  .main-container {
+    background-color: #fff;
+  }
+  
+  .app-layout {
+    margin-top: 0;
+  }
+  
+  .main-content--with-sidebar {
+    margin-left: 0;
+  }
 }

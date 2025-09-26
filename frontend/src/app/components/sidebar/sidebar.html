@@ -1,0 +1,60 @@
+<!-- Mobile backdrop -->
+<div
+  *ngIf="isMobileView() && isSidebarOpen()"
+  class="sidebar-backdrop"
+  (click)="onBackdropClick()"
+  (keydown)="onBackdropKeydown($event)"
+  tabindex="0"
+  aria-hidden="true"
+></div>
+
+<!-- Sidebar container -->
+<aside
+  [ngClass]="sidebarClasses()"
+  [attr.aria-hidden]="!isVisible()"
+  role="navigation"
+  aria-label="Main navigation"
+  id="sidebar-menu"
+>
+  <nav class="sidebar-nav">
+    <!-- Navigation items -->
+    <ul class="nav-list" role="list">
+      <li
+        *ngFor="let item of navigationItems(); trackBy: trackByNavigationItem"
+        class="nav-list-item"
+        role="none"
+      >
+        <a
+          [routerLink]="item.route"
+          [ngClass]="getNavigationItemClasses(item)"
+          [attr.data-nav-item]="item.id"
+          [attr.aria-current]="item.isActive ? 'page' : null"
+          role="menuitem"
+          tabindex="0"
+          (click)="onNavigationItemClick(item)"
+          (keydown)="onNavigationItemKeydown($event, item)"
+        >
+          <!-- Icon placeholder (can be replaced with actual icons) -->
+          <span class="nav-item-icon" *ngIf="item.icon" [attr.aria-hidden]="true">
+            <span class="icon" [ngClass]="item.icon"></span>
+          </span>
+          
+          <!-- Navigation item label -->
+          <span class="nav-item-label">{{ item.label }}</span>
+          
+          <!-- Active indicator -->
+          <span
+            *ngIf="item.isActive"
+            class="nav-item-indicator"
+            aria-hidden="true"
+          ></span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Footer section for future features -->
+    <div class="sidebar-footer">
+      <!-- Placeholder for user profile, settings, etc. -->
+    </div>
+  </nav>
+</aside>
