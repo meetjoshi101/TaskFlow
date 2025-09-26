@@ -21,20 +21,16 @@
   background-color: white;
   padding: var(--spacing-lg);
   min-height: calc(100vh - var(--nav-topbar-height));
+  overflow-x: hidden;
 }
 
-/* Desktop layout with sidebar */
+/* Desktop layout - no margin needed as flex handles spacing */
 .main-content--with-sidebar {
-  margin-left: var(--nav-sidebar-width-desktop);
-  transition: margin-left var(--nav-transition-duration) var(--ease-in-out);
+  /* Remove margin-left as flex layout handles the positioning */
 }
 
 /* Mobile responsive */
 @media (max-width: 1023px) {
-  .main-content--with-sidebar {
-    margin-left: 0;
-  }
-  
   .main-content {
     padding: var(--spacing-base);
   }
@@ -93,9 +89,5 @@ router-outlet {
   
   .app-layout {
     margin-top: 0;
-  }
-  
-  .main-content--with-sidebar {
-    margin-left: 0;
   }
 }
